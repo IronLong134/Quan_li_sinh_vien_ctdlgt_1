@@ -1,0 +1,32 @@
+﻿  main.cpp
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,11): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,20): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,29): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,38): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,47): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,56): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(612,47): warning C4244:  '+=': conversion from 'double' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(645,20): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(692,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(809,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(784,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(895,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(870,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(977,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(951,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1114,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1053,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1252,16): warning C4244:  'return': conversion from 'double' to 'float', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1352,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1262,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1403,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1379,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1527,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1502,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1631,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1606,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1734,21): warning C4018:  '<': signed/unsigned mismatch
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1708,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(323,10): warning C4551:  function call missing argument list
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(371,21): warning C4018:  '<': signed/unsigned mismatch
+  QuanLiSinhVien_1.vcxproj -> F:\QuanLiSinhVien_1\Debug\QuanLiSinhVien_1.exe

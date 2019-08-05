@@ -1,0 +1,4 @@
+askdd,cau truc du lieu,4,3
+a12wdq,phuong phap luan,4,3
+1,tri tue nhan tao,4,2
+ktlt,ky thuat lap trinh,4,2
