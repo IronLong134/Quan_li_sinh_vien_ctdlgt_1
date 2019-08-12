@@ -1,8 +1,12 @@
-#pragma once
+﻿#pragma once
 #include"console.h"
 using namespace std;
 #include"lib.h"
 string keyDisplaySubject[4] = { "Ma MH:", "Ten MH:", "So TCLT:", "So TCTH:" };
+string keyDisplayCreditClass[8] = { "Ma LopTC:","Ten MH:","Ma MH:","Nien khoa:","Hoc ki:","Nhom:","SVMax:","SVMin:" };
+string keyDisplayCreaditClassEdit[6] = { "Ma MH:", "NK:", "Hoc Ki:", "Nhom:", "SVMax:", "SVMin:" };
+string keyDisplayStudent[6] = { "Ma SV:", "Ho:", "ten:", "gioi","SDT","khoa" };
+string inputClass[1] = { "ma lop:" };
 int xKeyDisplay[9] = { 5,25,75,85,94, 120, 150, 160, 190 };//20 40 70 80 90 120 150 
 
 
@@ -19,6 +23,11 @@ void Logo() {
 	cout << "\\_, /\\_,_/\\_,_/_//_/ /_/_/ /___/_/_//_/_//_/  |___/_/\\__/_//_/";
 	gotoXY(Start, 7);
 	cout << " /_/ ";
+}
+void DeleteNote(int nColumn) // xoá ảo
+{
+	gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 40);
+	cout << setw(xKeyDisplay[nColumn] - xKeyDisplay[0] - 1) << " " << setfill(' ');
 }
 void CreateBox(int x, int y, string text, int length)
 {
@@ -139,5 +148,14 @@ void DisplayEdit(string key[], int nKey, int length)
 	{
 		CreateBox(X_ADD + 15 + 7, yAdd, key[i], length);
 		yAdd += 3;
+	}
+}
+void DeleteMenuAdd()
+{
+
+	for (int i = 0; i < 20; i++)
+	{
+		gotoXY(X_ADD + 2, Y_ADD + i - 1);
+		cout << setw(60) << setfill(' ') << " ";
 	}
 }

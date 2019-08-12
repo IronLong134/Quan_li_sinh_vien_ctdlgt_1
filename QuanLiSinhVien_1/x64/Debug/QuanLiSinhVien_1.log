@@ -1,31 +1,38 @@
 ﻿  main.cpp
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,11): warning C4309:  'initializing': truncation of constant value
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,20): warning C4309:  'initializing': truncation of constant value
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,29): warning C4309:  'initializing': truncation of constant value
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,38): warning C4309:  'initializing': truncation of constant value
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,47): warning C4309:  'initializing': truncation of constant value
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(132,56): warning C4309:  'initializing': truncation of constant value
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(253,31): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(272,38): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(608,27): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(612,47): warning C4244:  '+=': conversion from 'double' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(714,27): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(727,27): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(784,7): warning C4101:  'KT': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(870,7): warning C4101:  'KT': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(951,7): warning C4101:  'KT': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1053,7): warning C4101:  'KT': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1227,25): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1252,16): warning C4244:  'return': conversion from 'double' to 'float', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1262,7): warning C4101:  'KT': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1379,7): warning C4101:  'KT': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1502,7): warning C4101:  'KT': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1606,7): warning C4101:  'KT': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1708,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(140,11): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(140,20): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(140,29): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(140,38): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(140,47): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(140,56): warning C4309:  'initializing': truncation of constant value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(261,31): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(280,38): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(616,27): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(620,47): warning C4244:  '+=': conversion from 'double' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(722,27): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(735,27): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(792,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(878,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(959,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1061,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1235,25): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1260,16): warning C4244:  'return': conversion from 'double' to 'float', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1270,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1387,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1510,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1614,7): warning C4101:  'KT': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1716,7): warning C4101:  'KT': unreferenced local variable
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(27,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(88,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(127,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(196,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(336,24): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(323,10): warning C4551:  function call missing argument list
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(339,24): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(244,6): warning C4101:  'key': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(360,6): warning C4101:  'key': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(360,6): warning C4101: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(161) : warning C4715: 'DeleteNodeSubject': not all control paths return a value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(360,6): warning C4101: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(334) : warning C4715: 'ChooseSubject': not all control paths return a value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(360,6): warning C4101: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\student.h(193) : warning C4715: 'DeleteStudent': not all control paths return a value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(360,6): warning C4101: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\student.h(222) : warning C4715: 'Lay_Thong_Tin_Sinh_Vien_Theo_Ma': not all control paths return a value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(360,6): warning C4101: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(54) : warning C4715: 'FindCreditClassWithBinariSearch': not all control paths return a value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(360,6): warning C4101: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(81) : warning C4715: 'FindCreditClassWithIdSubject': not all control paths return a value
   QuanLiSinhVien_1.vcxproj -> F:\QuanLiSinhVien_1\x64\Debug\QuanLiSinhVien_1.exe

@@ -36,6 +36,12 @@
     <ClInclude Include="student.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="creditclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="registerstudent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="subject.txt">
+      <Filter>Resource Files\Data</Filter>
+    </Text>
+    <Text Include="student.txt">
       <Filter>Resource Files\Data</Filter>
     </Text>
   </ItemGroup>

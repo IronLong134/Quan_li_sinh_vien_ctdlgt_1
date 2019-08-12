@@ -1,4 +1,4 @@
-
+﻿
 #include <cstdlib>
 
 #include <math.h>
@@ -22,17 +22,17 @@ using namespace std;
 
 
 //only char and number
-void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& isSave, int distance, int condition)
+void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& isSave, int distance, int condition)// isMove : có lên xuống ko, ordinal: thứ tự, isSava: đã lưu đc chưa ,distance: vị trí con trỏ 
 {
 	int lengh = result.length();
-	gotoXY(X_ADD + distance, ordinal * 3 + Y_ADD);
+	gotoXY(X_ADD + distance, ordinal * 3 + Y_ADD);    //ordinnal : tận dụng để thay đổi Y
 	cout << result;
 	int count = lengh;
-	while (true)
-	{
+	int key=0;
+	do {
 		while (_kbhit())
 		{
-			int key = _getch();
+			key = _getch();
 			if (key != 224 && key != SPACE && key != 0)
 			{
 				if ((key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key >= 48 && key <= 57))
@@ -79,7 +79,7 @@ void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& is
 				}
 			}
 		}//kbhit
-	}//while true
+	} while (key != KEY_ESC);
 
 }
 
@@ -191,7 +191,7 @@ void CheckMoveAndValidateName(string& result, bool& isMove, int& ordinal, bool& 
 	}//true
 }
 
-void CheckMoveAndValidateTenMH(string& result, bool& isMove, int& ordinal, bool& isSave, int distance, int condition)
+void CheckMoveAndValidateNameSubject(string& result, bool& isMove, int& ordinal, bool& isSave, int distance, int condition)
 {
 	int lengh = result.length();
 	gotoXY(X_ADD + distance, ordinal * 3 + Y_ADD);
@@ -255,6 +255,9 @@ void CheckMoveAndValidateTenMH(string& result, bool& isMove, int& ordinal, bool&
 					return;
 				}
 			}
+			else if (key == KEY_ESC) {
+				break;
+			}
 		}//kbhit
 	}//true
 }
@@ -273,7 +276,7 @@ void CheckMoveAndValidateNumber(int& result, bool& isMove, int& ordinal, bool& i
 		while (_kbhit())
 		{
 			int key = _getch();
-			if (key != 224 && key != SPACE && key != 0)
+			if (key != KEY_CONTROL && key != SPACE && key != 0)
 			{
 				if (key >= 48 && key <= 57)
 				{

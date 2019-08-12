@@ -1,21 +1,41 @@
-#include"console.h"
+﻿#pragma once
 #include"subject.h"
+#include "student.h"
+#include"creditclass.h"
 int main() {
-	SetColor(ColorCode_Blue);
-	SetBGColor(ColorCode_White);
+	system("color F0");
+
 	fullScreen();
 	TREE_SUBJECT t;
 	
-	init(t);
-	//SUBJECT mh;
-	//mh.IdSubject = "ctdl";
-	//mh.NameSubject = "cautruc";
-	//mh.NumberTheory = 1;
-	//mh.NumberPratice = 3;
-	//InsertSubjectToTree(t, mh);
+	InitTreeSubject(t);
+	////SUBJECT mh;
+	////mh.idSubject = "ctdl";
+	////mh.nameSubject = "cautruc";
+	////mh.numberTheory = 1;
+	////mh.numberPratice = 3;
+	////InsertSubjectToTree(t, mh);
 	ReadFileSubject(t);
-	ManagerSubject(t);
-	WriteFileSubject(t);
+	//MenuSubjectManager(t);
+	//WriteFileSubject(t);
+	/*
+	string idStudent; // tối đa 10 kí tự
+	string firstName; // tối đa 15 kí tự
+	string lastName; // tối đa 20 kí tự
+	int gender; // tối đa 5 kí tự
+	string phoneNumber; // tối đa 11 kí tự
+	string idClass;
+	int yearJoin;
+	*/
+	
+	ListStudent ds;
+	ReadFileStudent(ds);
+	mainStudent(ds);
+	WriteFileStudent(ds);
+	//PTR_LISTCREDITCLASS list_credit_class = new LIST_CREDITCLASS;
+	//MenuManageCreditClass(list_credit_class,t);
+	//cout << "Aaaaaaaa" << endl;
+
 	system("pause");
 	return 0;
 }
