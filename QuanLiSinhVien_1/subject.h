@@ -285,7 +285,7 @@ NODE_SUBJECT* ChooseSubject(TREE_SUBJECT& t)
 			break;
 
 		case KEY_DOWN:
-			if (currposSubject % QUANTITY_PER_PAGE < QUANTITY_PER_PAGE - 1 && currposSubject < nSubject-1)
+			if (currposSubject % QUANTITY_PER_PAGE < QUANTITY_PER_PAGE - 1 && currposSubject < nSubject - 1)
 			{
 				currposSubject = currposSubject + 1;
 				oldSubject = newSubject;
@@ -336,7 +336,7 @@ void InputSubject(TREE_SUBJECT& t, SUBJECT& data, bool isEdited = false)
 {
 	ShowCur(true);
 
-	bool isMoveUp = false; 
+	bool isMoveUp = false;
 	bool isSave = false;
 	int ordinal = 0;
 
@@ -486,7 +486,13 @@ void InputSubject(TREE_SUBJECT& t, SUBJECT& data, bool isEdited = false)
 void MenuSubjectManager(TREE_SUBJECT& t)
 {
 backMenu:
-	totalPageSubject = nSubject / QUANTITY_PER_PAGE + 1;
+	if (nSubject % QUANTITY_PER_PAGE == 0) {
+		totalPageSubject = nSubject / QUANTITY_PER_PAGE;
+	}
+	else {
+		totalPageSubject = nSubject / QUANTITY_PER_PAGE + 1;
+	}
+
 	pageNowSubject = 1;
 	indexOutSubject = -1;
 	Display(keyDisplaySubject, sizeof(keyDisplaySubject) / sizeof(string));
@@ -605,7 +611,6 @@ void ReadTreeSubject(TREE_SUBJECT& t, ifstream& f)
 {
 	string line;
 	getline(f, line);
-
 	SUBJECT subject;
 	int n;
 	string temp;

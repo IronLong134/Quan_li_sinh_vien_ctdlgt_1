@@ -472,7 +472,6 @@ bool prevClass(DisplayStudent*& first, DisplayStudent*& last, DisplayStudent*& s
 		return false;
 	}
 }
-
 void InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
 {
 	ShowCur(true);
@@ -533,7 +532,7 @@ void InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
 			CheckMoveAndValidateNumber(sex, isMoveUp, ordinal, isSave, 19 + 7, 2);
 			break;
 		case 4:
-			CheckMoveAndValidateID(phoneNumber, isMoveUp, ordinal, isSave, 20 + 7, 11);
+			CheckMoveAndValidateStringNumber(phoneNumber, isMoveUp, ordinal, isSave, 20 + 7, 11);
 			break;
 		case 5:
 			CheckMoveAndValidateNumber(yearJoin, isMoveUp, ordinal, isSave, 21 + 7, 2019);
@@ -625,38 +624,46 @@ void mainStudent(ListStudent& ds) {
 			key = _getch();
 			if (key == KEY_CONTROL) {
 				key = _getch();
-				if (key == KEY_UP) {
-					prevStudent(first, last, select);
+				if (ds.pHead != NULL) {
+					if (key == KEY_UP) {
+						prevStudent(first, last, select);
+					}
+					else if (key == KEY_DOWN) {
+						nextStudent(first, last, select);
+					}
+					else if (key == KEY_LEFT) {
+						prevClass(first, last, select);
+					}
+					else if (key == KEY_RIGHT) {
+						nextClass(first, last, select);
+					}
 				}
-				else if (key == KEY_DOWN) {
-					nextStudent(first, last, select);
-				}
-				else if (key == KEY_LEFT) {
-					prevClass(first, last, select);
-				}
-				else if (key == KEY_RIGHT) {
-					nextClass(first, last, select);
-				}
+
+
+
 			}
 			else if (key == KEY_F2) {
-				SetColor(ColorCode_Blue);
-				SetBGColor(ColorCode_White);
-				DisplayEdit(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string), 35);
-				STUDENT st;
-				st.idClass = select->data->idClass;
-				InputStudent(ds, st);
+				if (ds.pHead != NULL) {
+					SetColor(ColorCode_Blue);
+					SetBGColor(ColorCode_White);
+					DisplayEdit(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string), 35);
+					STUDENT st;
+					st.idClass = select->data->idClass;
+					InputStudent(ds, st);
 
-				/*st.gender = 1;
-				st.phoneNumber = "1231242";
-				st.yearJoin = 2;*/
-				//InsertStudentInListTail(ds, InitNodeStudent(st));
-				clearAllStudentDisplay(l);
-				insertListStudent(l, ds);
-				for (first = l.first; first != NULL && first->data->idClass != st.idClass; first = first->next);
-				select = first;
-				last = endList(first);
-				Xu_Li_Con_Tro_Chi_Vi(FALSE);
-				system("cls");
+					/*st.gender = 1;
+					st.phoneNumber = "1231242";
+					st.yearJoin = 2;*/
+					//InsertStudentInListTail(ds, InitNodeStudent(st));
+					clearAllStudentDisplay(l);
+					insertListStudent(l, ds);
+					for (first = l.first; first != NULL && first->data->idClass != st.idClass; first = first->next);
+					select = first;
+					last = endList(first);
+					Xu_Li_Con_Tro_Chi_Vi(FALSE);
+					system("cls");
+				}
+
 			}
 			else if (key == KEY_F3) {
 				SetColor(ColorCode_Blue);
@@ -664,7 +671,10 @@ void mainStudent(ListStudent& ds) {
 				DisplayEdit(inputClass, sizeof(inputClass) / sizeof(string), 30);
 				STUDENT st;
 				gotoXY(159, 11);
-				getline(cin, st.idClass);
+				string id_class;
+				CheckMoveAndValdateIdClass(id_class, 30);
+				//getline(cin, st.idClass);
+				//st.idClass = id_class;
 				DisplayEdit(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string), 35);
 				InputStudent(ds, st);
 				clearAllStudentDisplay(l);
@@ -684,7 +694,7 @@ void mainStudent(ListStudent& ds) {
 				Xu_Li_Con_Tro_Chi_Vi(FALSE);
 			}
 			else if (key == KEY_F5) {
-				if(countStudentInClass(first, select->data->idClass) > 1){// đếm xem còn sv ko 
+				if (countStudentInClass(first, select->data->idClass) > 1) {// đếm xem còn sv ko 
 
 					string idClass = select->data->idClass; // giữ lại class
 					//DisplayStudent* temp = first;  // lưu lại first

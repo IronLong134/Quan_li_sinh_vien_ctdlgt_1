@@ -7,9 +7,34 @@ string keyDisplayCreditClass[8] = { "Ma LopTC:","Ten MH:","Ma MH:","Nien khoa:",
 string keyDisplayCreaditClassEdit[6] = { "Ma MH:", "NK:", "Hoc Ki:", "Nhom:", "SVMax:", "SVMin:" };
 string keyDisplayStudent[6] = { "Ma SV:", "Ho:", "ten:", "gioi","SDT","khoa" };
 string inputClass[1] = { "ma lop:" };
-int xKeyDisplay[9] = { 5,25,75,85,94, 120, 150, 160, 190 };//20 40 70 80 90 120 150 
+int xKeyDisplay[9] = { 5,25,65,85,100, 110, 120, 130, 140 };//20 40 70 80 90 120 150 
 
-
+void logoName()
+{
+	/*
+	.___                       .____
+|   |______  ____   ____   |    |    ____   ____    ____
+|   \_  __ \/  _ \ /    \  |    |   /  _ \ /    \  / ___\
+|   ||  | \(  <_> )   |  \ |    |__(  <_> )   |  \/ /_/  >
+|___||__|   \____/|___|  / |_______ \____/|___|  /\___  /
+					   \/          \/          \//_____/
+	*/
+	int batDau = (getXScreen() - 55) / 2;
+	SetColor(ColorCode_Blue);
+	SetBGColor(ColorCode_White);
+	gotoXY(batDau, 3);
+	cout << ".___                       .____                       ";
+	gotoXY(batDau, 4);
+	cout << "|   |______  ____   ____   |    |    ____   ____    ____  ";
+	gotoXY(batDau, 5);
+	cout << "|   \\_  __ \\/  _ \\ /    \\  |    |   /  _ \\ /    \\  / ___\\";
+	gotoXY(batDau, 6);
+	cout << "|   ||  | \\(  <_> )   |  \\ |    |__(  <_> )   |  \\/ /_/  >";
+	gotoXY(batDau, 7);
+	cout << "|___||__|   \\____/|___|  / |_______ \\____/|___|  /\\___  / ";
+	gotoXY(batDau, 8);
+	cout << "                       \\/          \\/          \\//_____/   ";
+}
 void Logo() {
 	int Start = (getXScreen() - 65) / 2;
 	
@@ -24,6 +49,43 @@ void Logo() {
 	gotoXY(Start, 7);
 	cout << " /_/ ";
 }
+void changeSelectMenu(int& select, int max, int key) { // thay đổi lựa chọn
+	if (key == KEY_CONTROL) {
+		key = _getch();
+		if (key == KEY_UP) {
+			if (select == 0) {
+				select = max - 1;
+			}
+			else {
+				select--;
+			}
+		}
+		else if (key == KEY_DOWN) {
+			if (select == max - 1) {
+				select = 0;
+			}
+			else {
+				select++;
+			}
+		}
+	}
+}
+void loadMenu(string menu[], int select, int n, int x, int y, int textColor, int bgColor) { // hiển thị menu
+	//int n= sizeof(menu) / sizeof(string);
+	for (int i = 0; i < n; i++) {
+		gotoXY(x, y + i);
+		if (i == select) {
+			SetColor(textColor);
+			SetBGColor(bgColor);
+		}
+		else {
+			SetColor(ColorCode_Black);
+			SetBGColor(ColorCode_White);
+		}
+		cout << canGiuaChuoi(menu[i], 40);
+	}
+}
+
 void DeleteNote(int nColumn) // xoá ảo
 {
 	gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 40);

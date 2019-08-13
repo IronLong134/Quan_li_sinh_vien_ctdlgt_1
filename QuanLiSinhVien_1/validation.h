@@ -22,6 +22,66 @@ using namespace std;
 
 
 //only char and number
+void CheckMoveAndValidateStringNumber(string& result, bool& isMove, int& ordinal, bool& isSave, int distance, int condition)// isMove : có lên xuống ko, ordinal: thứ tự, isSava: đã lưu đc chưa ,distance: vị trí con trỏ 
+{
+	int lengh = result.length();
+	gotoXY(X_ADD + distance, ordinal * 3 + Y_ADD);    //ordinnal : tận dụng để thay đổi Y
+	cout << result;
+	int count = lengh;
+	int key = 0;
+	do {
+		while (_kbhit())
+		{
+			key = _getch();
+			if (key != 224 && key != SPACE && key != 0)
+			{
+				if ((key >= '0' && key <= '9') )
+				{
+					if (count < condition)
+					{
+						count++;
+						cout << (char)key;
+						result += (char)key;
+					}
+
+				}
+				else if (key == KEY_ENTER)
+					return;
+				else if (key == KEY_BACKSPACE && count > 0)
+				{
+					cout << "\b" << " " << "\b";
+					result.erase(result.length() - 1, 1);
+					count--;
+
+				}
+			}
+			else if (key == 224)
+			{
+				key = _getch();
+				if (key == KEY_UP)
+				{
+					isMove = true;
+					return;
+				}
+				else
+				{
+					isMove = false;
+					return;
+				}
+			}
+			else if (key == 0)
+			{
+				key = _getch();
+				if (key == KEY_F10)
+				{
+					isSave = true;
+					return;
+				}
+			}
+		}//kbhit
+	} while (key != KEY_ESC);
+
+}
 void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& isSave, int distance, int condition)// isMove : có lên xuống ko, ordinal: thứ tự, isSava: đã lưu đc chưa ,distance: vị trí con trỏ 
 {
 	int lengh = result.length();
@@ -40,8 +100,11 @@ void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& is
 					if (count < condition)
 					{
 						count++;
-						cout << (char)key;
-						result += (char)key;
+						char key1 = (char)key;
+						//cout << Lower(key1);
+						char keyLower = Lower(key1);
+						cout << keyLower;
+						result += keyLower;
 					}
 
 				}
@@ -101,8 +164,11 @@ void CheckMoveAndValdateIdClass(string& result, int distance)
 					if (count < 15)
 					{
 						count++;
-						cout << (char)key;
-						result += (char)key;
+						char key1 = (char)key;
+						//cout << Lower(key1);
+						char keyLower = Lower(key1);
+						cout << keyLower;
+						result += keyLower;
 					}
 
 				}
@@ -112,6 +178,7 @@ void CheckMoveAndValdateIdClass(string& result, int distance)
 				{
 					cout << "\b" << " " << "\b";
 					result.erase(result.length() - 1, 1);
+					
 					count--;
 
 				}
@@ -149,7 +216,10 @@ void CheckMoveAndValidateName(string& result, bool& isMove, int& ordinal, bool& 
 						}
 						else
 						{
-							cout << (char)key;
+							
+							char key1 = (char)key;
+							//cout << Lower(key1);
+							cout << Lower(key1);
 							result += (char)key;
 							isSpaced = false;
 						}
@@ -218,8 +288,11 @@ void CheckMoveAndValidateNameSubject(string& result, bool& isMove, int& ordinal,
 						}
 						else
 						{
-							cout << (char)key;
-							result += (char)key;
+							char key1 =(char)key;
+							//cout << Lower(key1);
+							char keyLower = Lower(key1);
+							cout << keyLower;
+							result += keyLower;
 							isSpaced = false;
 						}
 					}

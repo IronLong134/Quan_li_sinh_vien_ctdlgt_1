@@ -129,7 +129,23 @@ void RemoveScroll() {
 	ShowScrollBar(x, SB_BOTH, FALSE);
 }
 
-
+string canGiuaChuoi(string dauvao, int toida) {
+	string temp;
+	temp.resize(toida, ' ');
+	int n = (temp.size() - dauvao.size()) / 2;
+	for (int i = 0; i < dauvao.size(); i++) {
+		temp[i + n] = dauvao[i];
+	}
+	return temp;
+}
+char Lower(char& a)
+{
+		if (a >= 97 && a <= 122)
+		{
+			a -= 32;
+		}	
+		return a;
+}
 /* ======================================= HÀM XỬ LÍ ĐỘ HỌA ======================================= */
 
 // hàm vẽ khung băt đầu tại tọa độ (x, y) với chiều dài width và chiều cao height

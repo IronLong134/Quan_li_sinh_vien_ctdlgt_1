@@ -1,6 +1,5 @@
-﻿askdd,cau truc du lieu3,4,3
-a12wdq,phuong phap luan,4,3
-1,tri tue nhan tao,4,2
-2,ki thuat so,3,2
-3,ki thuat so3,3,2
-5,aghjk,3,2
+mon3,tri tue nhan tao,4,2
+MON5,CAU TRUC DU LIEU,3,2
+mon4,ki thuat so,3,2
+mon5,ki thuat so3,3,2
+mon6,lap trinh huong doi tuong,3,2

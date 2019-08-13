@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include"subject.h"
-#include"registerstudent.h"
+//#include"registerstudent.h"
 
 
 struct CreditClass {
@@ -14,7 +14,7 @@ struct CreditClass {
 	int studentMax;
 	int studentMin;
 
-	LIST_REGISTERSTUDENT listRegisterStudent;
+	//LIST_REGISTERSTUDENT listRegisterStudent;
 };
 typedef struct CreditClass CREDITCLASS;
 typedef CREDITCLASS* PTR_CREDITCLASS;
@@ -257,6 +257,9 @@ void InputCreditClass(PTR_LISTCREDITCLASS& l, PTR_CREDITCLASS& cc, TREE_SUBJECT 
 			else if (studentMax < studentMin)
 			{
 				gotoXY(X_NOTIFY, Y_NOTIFY); cout << "So luong sinh vien khong hop le";
+			}
+			else if (FindSubject(t, temp->idSubject) == NULL) {
+				gotoXY(X_NOTIFY, Y_NOTIFY); cout << "Ma mon hoc khong ton tai, nhap ma khac ";
 			}
 			else
 			{
@@ -529,5 +532,85 @@ backMenu:
 			else if (key == KEY_ESC)
 				return;
 		}
+	}
+}
+
+//đọc ghi file 
+
+void ReadCreditClass(PTR_LISTCREDITCLASS& list_credit_class, ifstream& f)
+{
+	string line;
+	getline(f, line);
+	CreditClass credit_class;
+	int n;
+	string temp;
+	while (!f.eof()) {
+		n = 0;
+		temp = "";
+		for (int i = 0; line[n] != ','; i++, n++) {
+			temp.push_back(line[n]);
+		}
+		n++;
+		credit_class.idClass = atoi(temp.c_str());
+		temp = "";
+		for (int i = 0; line[n] != ','; i++, n++) {
+			temp.push_back(line[n]);
+		}
+		n++;
+		credit_class.idSubject = temp;
+		temp = "";
+		for (int i = 0; line[n] != ','; i++, n++) {
+			temp.push_back(line[n]);
+		}
+		n++;
+		credit_class.nameSubject = temp;
+		temp = "";
+		for (int i = 0; line[n] != ','; i++, n++) {
+			temp.push_back(line[n]);
+		}
+		n++;
+		credit_class.shoolYear = atoi(temp.c_str());
+		temp = "";
+		for (int i = 0; line[n] != ','; i++, n++) {
+			temp.push_back(line[n]);
+		}
+		n++;
+		credit_class.semester = atoi(temp.c_str());
+		temp = "";
+		for (int i = 0; line[n] != ','; i++, n++) {
+			temp.push_back(line[n]);
+		}
+		n++;
+		credit_class.group = atoi(temp.c_str());
+		temp = "";
+		for (int i = 0; line[n] != ','; i++, n++) {
+			temp.push_back(line[n]);
+		}
+		n++;
+		credit_class.studentMax= atoi(temp.c_str());
+		temp = "";
+		for (int i = 0; n < line.size(); i++, n++) {
+			temp.push_back(line[n]);
+		}
+		n++;
+		credit_class.studentMin = atoi(temp.c_str());
+		
+		list_credit_class->listCreditClass[list_credit_class->n++] = new CREDITCLASS(credit_class);
+		
+		getline(f, line);
+	}
+}
+void ReadFileCreditClass(PTR_LISTCREDITCLASS& list)
+{
+	ifstream f("creditclass.txt");
+	if (f.is_open()) {
+		/*	if (!f.peek() == EOF) {
+				getline(f, pass);
+				docCay(t, f);
+				ReadStudent(ds, f);
+				f.close();
+			}*/
+		ReadCreditClass(list, f);
+		f.close();
 	}
 }
