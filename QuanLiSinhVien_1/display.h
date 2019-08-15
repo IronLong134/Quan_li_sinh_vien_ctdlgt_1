@@ -7,7 +7,7 @@ string keyDisplayCreditClass[8] = { "Ma LopTC:","Ten MH:","Ma MH:","Nien khoa:",
 string keyDisplayCreaditClassEdit[6] = { "Ma MH:", "NK:", "Hoc Ki:", "Nhom:", "SVMax:", "SVMin:" };
 string keyDisplayStudent[6] = { "Ma SV:", "Ho:", "ten:", "gioi","SDT","khoa" };
 string inputClass[1] = { "ma lop:" };
-int xKeyDisplay[9] = { 5,25,65,85,100, 110, 120, 130, 140 };//20 40 70 80 90 120 150 
+int xKeyDisplay[9] = { 5,25,65,85,100, 110, 120, 140, 150 };//20 40 70 80 90 120 150 
 
 void logoName()
 {
@@ -104,7 +104,11 @@ void CreateBox(int x, int y, string text, int length)
 }
 void Display(string key[], int nKey)
 {
+	SetColor(ColorCode_Blue);
+	SetBGColor(ColorCode_White);
 	Logo();
+
+	
 	//show key
 	for (int i = 0; i < nKey; i++)
 	{
@@ -211,6 +215,16 @@ void DisplayEdit(string key[], int nKey, int length)
 		CreateBox(X_ADD + 15 + 7, yAdd, key[i], length);
 		yAdd += 3;
 	}
+}
+void TutorialStudent() {
+	Ve_Khung(X_ADD-2, Y_ADD+25, 70, 15);
+	gotoXY(X_ADD, Y_ADD + 27); cout << string(26,' ')<<"HUONG DAN";
+	gotoXY(X_ADD, Y_ADD + 30); cout << "F2:Them sinh vien vao lop hien tai";
+	gotoXY(X_ADD, Y_ADD + 30+2); cout << "F3:Them lop moi";
+	gotoXY(X_ADD, Y_ADD + 30+4); cout << "F4:Xoa sinh vien trong lop do(khong the xoa het ds)";
+	gotoXY(X_ADD, Y_ADD + 30 + 6); cout << "F5:Xoa mot lop, tat ca sinh vien trong lp se mat ";
+	gotoXY(X_ADD, Y_ADD + 30 + 8); cout << "F10: Luu them va sua ";
+	gotoXY(X_ADD, Y_ADD + 30 + 8); cout << "ESC: Huỷ bỏ thao tác ";
 }
 void DeleteMenuAdd()
 {

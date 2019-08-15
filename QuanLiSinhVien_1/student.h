@@ -110,6 +110,19 @@ void InsertStudentInListTail(ListStudent& list_student, NodeStudent* ins)//inser
 		run->pNext = ins;
 	}
 }
+int FindIndexStudent(ListStudent list, string id_student) {
+	int index = -1;
+	if (list.pHead == NULL) {
+		return -1;
+	}
+	for (NodeStudent* p = list.pHead; p != NULL; p = p->pNext) {
+		++index;
+		if (p->data.idStudent == id_student) {
+			return index;
+		}
+	}
+	return 0;
+}
 void DeleteStudentHead(ListStudent& list_student)
 {
 	// danh sách đang rỗng
@@ -206,7 +219,7 @@ bool CheckIsExist(ListStudent list_student, string id_student)
 	}
 	return false;
 }
-STUDENT Lay_Thong_Tin_Sinh_Vien_Theo_Ma(ListStudent ds, char* masv)
+STUDENT GetInfoStudentById(ListStudent ds, string masv)
 {
 
 	for (NodeStudent* run = ds.pHead; run != NULL; run = run->pNext)
@@ -224,71 +237,74 @@ STUDENT Lay_Thong_Tin_Sinh_Vien_Theo_Ma(ListStudent ds, char* masv)
 void ReadStudent(ListStudent& list_student, ifstream& f)
 {
 	string line;
-	getline(f, line);
 	STUDENT student;
 	int n;
+	//getline(f, line);
 	string temp;
-	while (!f.eof()) {
-		n = 0;
-		temp = "";
-		for (int i = 0; line[n] != ','; i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		student.idStudent = temp;
-		temp = "";
-		for (int i = 0; line[n] != ','; i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		student.firstName = temp;
-		temp = "";
-		for (int i = 0; line[n] != ','; i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		student.lastName = temp;
-		temp = "";
-		for (int i = 0; line[n] != ','; i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		student.gender = atoi(temp.c_str());
-		temp = "";
-		for (int i = 0; line[n] != ','; i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		student.phoneNumber = temp;
-		temp = "";
-		for (int i = 0; line[n] != ','; i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		student.idClass = temp;
-		temp = "";
-		for (int i = 0; n < line.size(); i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		student.yearJoin = atoi(temp.c_str());
-
-		InsertStudentInListTail(list_student, InitNodeStudent(student));
+	while (f.eof() == false) {
 		getline(f, line);
+		if (line != "") {
+			n = 0;
+			temp = "";
+			for (int i = 0; line[n] != ','; i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			student.idStudent = temp;
+			temp = "";
+			for (int i = 0; line[n] != ','; i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			student.firstName = temp;
+			temp = "";
+			for (int i = 0; line[n] != ','; i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			student.lastName = temp;
+			temp = "";
+			for (int i = 0; line[n] != ','; i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			student.gender = atoi(temp.c_str());
+			temp = "";
+			for (int i = 0; line[n] != ','; i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			student.phoneNumber = temp;
+			temp = "";
+			for (int i = 0; line[n] != ','; i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			student.idClass = temp;
+			temp = "";
+			for (int i = 0; n < line.size(); i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			student.yearJoin = atoi(temp.c_str());
+			InsertStudentInListTail(list_student, InitNodeStudent(student));
+		}
+		else {
+			break;
+		}
+
+
+
+
 	}
 }
 void ReadFileStudent(ListStudent& list_student)
 {
 	ifstream f("student.txt");
 	if (f.is_open()) {
-		/*	if (!f.peek() == EOF) {
-				getline(f, pass);
-				docCay(t, f);
-				docSV(ds, f);
-				f.close();
-			}*/
 		ReadStudent(list_student, f);
 		f.close();
+
 	}
 }
 void WriteFileStudent(ListStudent ds)
@@ -320,11 +336,13 @@ void WriteFileStudent(ListStudent ds)
 //=============================================================================================================
 
 struct DisplayStudent {
+
 	STUDENT* data;
 	DisplayStudent* next = NULL;
 	DisplayStudent* prev = NULL;
 };
 struct ListStudentDisplay {
+	int nStudent = 0;
 	DisplayStudent* first = NULL;
 	DisplayStudent* last = NULL;
 };
@@ -339,6 +357,7 @@ void insertLast(ListStudentDisplay& l, STUDENT* data) {
 		ins->prev = l.last;
 		l.last = ins;
 	}
+	l.nStudent++;
 }
 
 void insertListStudent(ListStudentDisplay& l, ListStudent ds) {
@@ -369,7 +388,14 @@ DisplayStudent* endList(DisplayStudent* first) {
 	}
 	return run;
 }
-
+void OutputOneStudent(NodeStudent student, int locate) // vi tri == locate
+{
+	//DeleteOldData(sizeof(keyDisplaySubject) / sizeof(string), locate);
+	//gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 3 + locate); cout << student.data.idStudent;
+	//gotoXY(xKeyDisplay[1] + 1, Y_DISPLAY + 3 + locate); cout << student.data.;
+	//gotoXY(xKeyDisplay[2] + 1, Y_DISPLAY + 3 + locate); cout << student.numberTheory;
+	//gotoXY(xKeyDisplay[3] + 1, Y_DISPLAY + 3 + locate); cout << student.numberPratice;
+}
 void displayStudentList(DisplayStudent* first, DisplayStudent* last, DisplayStudent* select) {
 	SetBGColor(ColorCode_White);
 	SetColor(ColorCode_Black);
@@ -381,30 +407,43 @@ void displayStudentList(DisplayStudent* first, DisplayStudent* last, DisplayStud
 	else
 		cout << "Hien Khong Co Lop!!!";
 	if (first != NULL) {
+		Display(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string));
 		for (DisplayStudent* run = first;; run = run->next) {
 			if (run == select) {
 				//to mau neu dang chon
 				SetBGColor(ColorCode_Blue);
+				SetColor(ColorCode_White);
 			}
 			else {
 				//mau binh thuong neu k chon
 				SetBGColor(ColorCode_White);
+				SetColor(ColorCode_Blue);
 			}
 			//display tai day
 			if (run != NULL) {
-				gotoXY(5, 10 + i++);
-				cout << " " << run->data->idStudent << string(10 - run->data->idStudent.size(), ' ') << char(186) << " " << run->data->firstName
-					<< string(15 - run->data->firstName.size(), ' ') << char(186) << " " << run->data->lastName << string(20 - run->data->lastName.size(), ' ');
+				//gotoXY(5, 10 + i++);
+				i = i++;
+				/*	cout << char(186)<<" " << run->data->idStudent << string(10 - run->data->idStudent.size(), ' ') << char(186) << " " << run->data->firstName
+						<< string(15 - run->data->firstName.size(), ' ') << char(186) << " " << run->data->lastName << string(20 - run->data->lastName.size(), ' ');*/
+				DeleteOldData(sizeof(keyDisplaySubject) / sizeof(string), i);
+				string gender = (run->data->gender == 1) ? "Nam" : "Nu";
+				gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 3 + i); cout << run->data->idStudent;
+				gotoXY(xKeyDisplay[1] + 1, Y_DISPLAY + 3 + i); cout << run->data->firstName;
+				gotoXY(xKeyDisplay[2] + 1, Y_DISPLAY + 3 + i); cout << run->data->lastName;
+				gotoXY(xKeyDisplay[3] + 1, Y_DISPLAY + 3 + i); cout << gender;
+				gotoXY(xKeyDisplay[4] + 1, Y_DISPLAY + 3 + i); cout << run->data->phoneNumber;
+				gotoXY(xKeyDisplay[5] + 1, Y_DISPLAY + 3 + i); cout << run->data->yearJoin;
+
 			}
 			if (run == last)
 				break;
 		}
 	}
-	while (i < 11) {
-		gotoXY(5, 10 + i++);
-		SetBGColor(ColorCode_White);
-		cout << string(11, ' ') << char(186) << string(16, ' ') << char(186) << string(21, ' ');
-	}
+	//while (i < 11) {
+	//	gotoXY(5, 10 + i++);
+	//	SetBGColor(ColorCode_White);
+	//	cout << char(186)<<string(11, ' ') << char(186) << string(16, ' ') << char(186) << string(21, ' ')<<char(186);
+	//}
 }
 
 bool nextStudent(DisplayStudent*& first, DisplayStudent*& last, DisplayStudent*& select) {
@@ -472,7 +511,30 @@ bool prevClass(DisplayStudent*& first, DisplayStudent*& last, DisplayStudent*& s
 		return false;
 	}
 }
-void InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
+void InputClass(STUDENT& st, bool& isSave) {
+	ShowCur(true);
+	int key = 0;
+	string id_class;
+	isSave = false;
+	while (key != KEY_ESC) {
+		CheckMoveAndValdateIdClass(id_class, isSave, key);
+		if (key == KEY_ESC) {
+			DeleteMenuAdd();
+			isSave = false;
+			break;
+		}
+		if (key == KEY_ENTER) {
+			if (isSave == true) {
+				st.idClass = id_class;
+				break;
+			}
+
+		}
+
+	}
+	ShowCur(false);
+}
+int InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
 {
 	ShowCur(true);
 	int ordinal = 0;
@@ -506,14 +568,14 @@ void InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
 		gotoXY(X_ADD + 21 + 7, 5 * 3 + Y_ADD);
 		cout << yearJoin;
 	}
-
+	int key = 0;
 	while (true)
 	{
 		switch (ordinal)
 		{
 		case 0:
 			if (isEdited) break;
-			CheckMoveAndValidateID(idStudent, isMoveUp, ordinal, isSave, 20 + 7, 12);
+			CheckMoveAndValidateID(idStudent, isMoveUp, ordinal, isSave, 20 + 7, 12, key);
 			if (FindStudent(l, idStudent) == NULL)
 			{
 				idIsExist = false;
@@ -523,22 +585,26 @@ void InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
 
 			break;
 		case 1:
-			CheckMoveAndValidateNameSubject(firstName, isMoveUp, ordinal, isSave, 17 + 7, 20);
+			CheckMoveAndValidateNameSubject(firstName, isMoveUp, ordinal, isSave, 17 + 7, 20, key);
 			break;
 		case 2:
-			CheckMoveAndValidateNameSubject(lastName, isMoveUp, ordinal, isSave, 18 + 7, 10);
+			CheckMoveAndValidateNameSubject(lastName, isMoveUp, ordinal, isSave, 18 + 7, 10, key);
 			break;
 		case 3:
-			CheckMoveAndValidateNumber(sex, isMoveUp, ordinal, isSave, 19 + 7, 2);
+			CheckMoveAndValidateNumber(sex, isMoveUp, ordinal, isSave, 19 + 7, 2, key);
 			break;
 		case 4:
-			CheckMoveAndValidateStringNumber(phoneNumber, isMoveUp, ordinal, isSave, 20 + 7, 11);
+			CheckMoveAndValidateStringNumber(phoneNumber, isMoveUp, ordinal, isSave, 20 + 7, 11, key);
 			break;
 		case 5:
-			CheckMoveAndValidateNumber(yearJoin, isMoveUp, ordinal, isSave, 21 + 7, 2019);
+			CheckMoveAndValidateNumber(yearJoin, isMoveUp, ordinal, isSave, 21 + 7, 2019, key);
 			break;
 		}
-
+		if (key == KEY_ESC) {
+			DeleteMenuAdd();
+			return false;
+			break;
+		}
 		if (isMoveUp)
 		{
 			if (ordinal == 0)
@@ -584,14 +650,17 @@ void InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
 				{
 					NodeStudent* p = FindStudent(l, st.idStudent);
 					p->data = st;
+					return true;
+
 				}
 				else
 				{
+
 					InsertStudentInListTail(l, InitNodeStudent(st));
+					return true;
 				}
 				//totalPageStudent = ((l.n - 1) / QUANTITY_PER_PAGE) + 1;
-				DeleteMenuAdd();
-				return;
+
 			}
 			isSave = false;
 		}
@@ -601,6 +670,7 @@ void InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
 		}
 	}
 	ShowCur(false);
+
 }
 
 int countStudentInClass(DisplayStudent* first, string idClass) {// chạy từ ngay trang của lớp đó 
@@ -609,13 +679,13 @@ int countStudentInClass(DisplayStudent* first, string idClass) {// chạy từ n
 	return i;
 }
 
-
 void mainStudent(ListStudent& ds) {
 	ListStudentDisplay l;
 	DisplayStudent* first, * last, * select;
 	int key;
-	Xu_Li_Con_Tro_Chi_Vi(FALSE);
+	TutorialStudent();
 	do {
+		ShowCur(false);
 		insertListStudent(l, ds);
 		select = first = l.first;
 		last = endList(first);
@@ -624,6 +694,7 @@ void mainStudent(ListStudent& ds) {
 			key = _getch();
 			if (key == KEY_CONTROL) {
 				key = _getch();
+
 				if (ds.pHead != NULL) {
 					if (key == KEY_UP) {
 						prevStudent(first, last, select);
@@ -631,11 +702,19 @@ void mainStudent(ListStudent& ds) {
 					else if (key == KEY_DOWN) {
 						nextStudent(first, last, select);
 					}
+
 					else if (key == KEY_LEFT) {
+						if (FindIndexStudent(ds, l.first->data->idStudent) > 0)
+							clrscr();
 						prevClass(first, last, select);
+
 					}
 					else if (key == KEY_RIGHT) {
-						nextClass(first, last, select);
+						int index = FindIndexStudent(ds, l.last->data->idStudent);
+					
+							clrscr();
+							nextClass(first, last, select);
+						
 					}
 				}
 
@@ -646,21 +725,30 @@ void mainStudent(ListStudent& ds) {
 				if (ds.pHead != NULL) {
 					SetColor(ColorCode_Blue);
 					SetBGColor(ColorCode_White);
+					//string id_class_defaut = first->data->idClass;
+
 					DisplayEdit(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string), 35);
 					STUDENT st;
+
 					st.idClass = select->data->idClass;
-					InputStudent(ds, st);
 
 					/*st.gender = 1;
 					st.phoneNumber = "1231242";
 					st.yearJoin = 2;*/
 					//InsertStudentInListTail(ds, InitNodeStudent(st));
-					clearAllStudentDisplay(l);
-					insertListStudent(l, ds);
-					for (first = l.first; first != NULL && first->data->idClass != st.idClass; first = first->next);
-					select = first;
-					last = endList(first);
-					Xu_Li_Con_Tro_Chi_Vi(FALSE);
+					if (InputStudent(ds, st)) {
+						clearAllStudentDisplay(l);
+						insertListStudent(l, ds);
+						for (first = l.first; first != NULL && first->data->idClass != st.idClass; first = first->next);
+						select = first;
+						last = endList(first);
+					}
+					else {
+						Xu_Li_Con_Tro_Chi_Vi(FALSE);
+						break;
+					}
+
+
 					system("cls");
 				}
 
@@ -670,27 +758,42 @@ void mainStudent(ListStudent& ds) {
 				SetBGColor(ColorCode_White);
 				DisplayEdit(inputClass, sizeof(inputClass) / sizeof(string), 30);
 				STUDENT st;
+				bool isSave = false;
+
+				//string id_class;
 				gotoXY(159, 11);
-				string id_class;
-				CheckMoveAndValdateIdClass(id_class, 30);
-				//getline(cin, st.idClass);
-				//st.idClass = id_class;
-				DisplayEdit(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string), 35);
-				InputStudent(ds, st);
-				clearAllStudentDisplay(l);
-				insertListStudent(l, ds);
-				for (first = l.first; first != NULL && first->data->idClass != st.idClass; first = first->next);
-				select = first;
-				last = endList(first);
+				InputClass(st, isSave);
+				if (isSave == true) {
+					DisplayEdit(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string), 35);
+					//getline(cin, st.idClass);
+					//st.idClass = id_class;
+				}
+				else {
+					break;
+				}
+				if (InputStudent(ds, st)) {
+					clearAllStudentDisplay(l);
+					insertListStudent(l, ds);
+					for (first = l.first; first != NULL && first->data->idClass != st.idClass; first = first->next);
+					select = first;
+					last = endList(first);
+				}
+
 				Xu_Li_Con_Tro_Chi_Vi(FALSE);
 				system("cls");
+				//}
+				//else {
+				//	break;
+				//}
+
 			}
 			else if (key == KEY_F4) {
 				Xu_Li_Con_Tro_Chi_Vi(TRUE);
 				SetColor(ColorCode_Blue);
 				SetBGColor(ColorCode_White);
+				bool change = false;
 				DisplayEdit(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string), 35);
-				InputStudent(ds, *select->data, true);
+				InputStudent(ds, *select->data, change);
 				Xu_Li_Con_Tro_Chi_Vi(FALSE);
 			}
 			else if (key == KEY_F5) {

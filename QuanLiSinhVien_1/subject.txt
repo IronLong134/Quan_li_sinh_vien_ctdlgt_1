@@ -1,5 +1,4 @@
-mon3,tri tue nhan tao,4,2
+MON3,TRI TUE NHAN TAO,4,2
+MON2,KI THUAT SO,3,2
+MON1,LAP TRINH HUONG DOI TUONG,3,2
 MON5,CAU TRUC DU LIEU,3,2
-mon4,ki thuat so,3,2
-mon5,ki thuat so3,3,2
-mon6,lap trinh huong doi tuong,3,2

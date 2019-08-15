@@ -35,42 +35,51 @@ void main() {
 	*/
 
 	ListStudent ds;
-	
+
 	//mainStudent(ds);
 	//WriteFileStudent(ds);
-	PTR_LISTCREDITCLASS list_credit_class = new LIST_CREDITCLASS;
+	LIST_CREDITCLASS list_credit_class;
 	////ReadFileCreditClass(list_credit_class);
 	//MenuManageCreditClass(list_credit_class,t);
 	//cout << "Aaaaaaaa" << endl;
 
 	int select = 0;//biến chọn
 	int key = 0;
+	ReadFileSubject(t);
+	ReadFileStudent(ds);
+	ReadFileCreditClass(list_credit_class);
 	while (true)
 	{
-        
+
 		logoName();
 		Xu_Li_Con_Tro_Chi_Vi(0);
 		loadMenu(Menu, select, 5, (getXScreen() - 40) / 2, 20, ColorCode_White, ColorCode_Blue);
-		
+
 		//hienThiMenu(thongTinMenuMonHoc, 0, 2, 4, 25, ColorCode_White, ColorCode_Cyan);
 		//hienThiThongTinMonHoc(mhtt, 0, 0, ColorCode_Cyan);
 		key = _getch();
 		changeSelectMenu(select, 6, key);
 		if (key == KEY_ENTER) {
 			if (select == 4) {
-				return ;
+				return;
 			}
 			else if (select == 0) {
+
+
 				/*loadMenu(Menu, select, 6, 4, 11, ColorCode_White, ColorCode_Cyan);*/
 				clrscr();
-				ReadFileSubject(t);
+				SetColor(ColorCode_Blue);
+				SetBGColor(ColorCode_White);
+
 				MenuSubjectManager(t);
 				WriteFileSubject(t);
 				clrscr();
 			}
 			else if (select == 1) {
 				clrscr();
-				ReadFileStudent(ds);
+				SetColor(ColorCode_Blue);
+				SetBGColor(ColorCode_White);
+
 				mainStudent(ds);
 				WriteFileStudent(ds);
 				clrscr();
@@ -78,12 +87,15 @@ void main() {
 			}
 			else if (select == 2) {
 				clrscr();
-				MenuManageCreditClass(list_credit_class,t);
-				ReadFileCreditClass(list_credit_class);
+				SetColor(ColorCode_Blue);
+				SetBGColor(ColorCode_White);
+
+				MenuManageCreditClass(list_credit_class, t);
+				WriteFileCreditClass(list_credit_class);
 				clrscr();
 			}
 		}
 	}
 	system("pause");
-	return ;
+	return;
 }

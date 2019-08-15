@@ -362,7 +362,7 @@ void InputSubject(TREE_SUBJECT& t, SUBJECT& data, bool isEdited = false)
 		gotoXY(X_ADD + 22 + 7, 3 * 3 + Y_ADD);
 		cout << number_pratice;
 	}
-
+	int key = 0;
 	while (true)
 	{
 
@@ -370,7 +370,7 @@ void InputSubject(TREE_SUBJECT& t, SUBJECT& data, bool isEdited = false)
 		{
 		case 0:     // case 01,2,3,4 là bắt sự kiện các trường. 
 			if (isEdited) break;
-			CheckMoveAndValidateID(id_subject, isMoveUp, ordinal, isSave, 20 + 7, 10);
+			CheckMoveAndValidateID(id_subject, isMoveUp, ordinal, isSave, 20 + 7, 10, key);
 
 			data.idSubject = id_subject;
 
@@ -382,16 +382,19 @@ void InputSubject(TREE_SUBJECT& t, SUBJECT& data, bool isEdited = false)
 			IdIsExits = true;
 			break;
 		case 1:
-			CheckMoveAndValidateNameSubject(name_subject, isMoveUp, ordinal, isSave, 21 + 7, 25);
+			CheckMoveAndValidateNameSubject(name_subject, isMoveUp, ordinal, isSave, 21 + 7, 25, key);
 			break;
 		case 2:
-			CheckMoveAndValidateNumber(number_pratice, isMoveUp, ordinal, isSave, 22 + 7, 4);
+			CheckMoveAndValidateNumber(number_pratice, isMoveUp, ordinal, isSave, 22 + 7, 4, key);
 			break;
 		case 3:
-			CheckMoveAndValidateNumber(number_theory, isMoveUp, ordinal, isSave, 22 + 7, 4);
+			CheckMoveAndValidateNumber(number_theory, isMoveUp, ordinal, isSave, 22 + 7, 4, key);
 
 		}
-
+		if (key == KEY_ESC) {
+			DeleteMenuAdd();
+			break;
+		}
 		if (isMoveUp)
 		{
 			if (ordinal == 0)
@@ -445,7 +448,7 @@ void InputSubject(TREE_SUBJECT& t, SUBJECT& data, bool isEdited = false)
 				else
 				{
 					InsertSubjectToTree(t, data);
-
+					gotoXY(X_NOTIFY, Y_NOTIFY); cout << "Them thanh cong";
 				}
 				//DeleteMenuAdd();
 				gotoXY(X_NOTIFY, Y_NOTIFY + 1);
@@ -519,7 +522,7 @@ backMenu:
 					DisplayEdit(keyDisplaySubject, sizeof(keyDisplaySubject) / sizeof(string), 35);
 					InputSubject(t, ins);
 					//gotoXY(X_TITLE, Y_TITLE); cout << " QUAN LY DANH SACH MON HOC ";
-					gotoXY(X_NOTIFY, Y_NOTIFY); cout << "Them thanh cong";
+
 					totalPageSubject = nSubject / QUANTITY_PER_PAGE + 1;
 					pageNowSubject = 1;
 					//QuickSort(0, nSubject, arrSubject);
@@ -610,40 +613,45 @@ backMenu:
 void ReadTreeSubject(TREE_SUBJECT& t, ifstream& f)
 {
 	string line;
-	getline(f, line);
+	//getline(f, line);
 	SUBJECT subject;
 	int n;
 	string temp;
-	while (!f.eof())
+	while (f.eof() == false)
 	{
-		n = 0;
-		temp = "";
-		for (int i = 0; line[n] != ','; i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		subject.idSubject = temp;
-		temp = "";
-		for (int i = 0; line[n] != ','; i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		subject.nameSubject = temp;
-		temp = "";
-		for (int i = 0; line[n] != ','; i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		subject.numberTheory = atoi(temp.c_str());
-		temp = "";
-		for (int i = 0; n < line.size(); i++, n++) {
-			temp.push_back(line[n]);
-		}
-		n++;
-		subject.numberPratice = atoi(temp.c_str());
-
-		InsertSubjectToTree(t, subject);
 		getline(f, line);
+		if (line != "") {
+			n = 0;
+			temp = "";
+			for (int i = 0; line[n] != ','; i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			subject.idSubject = temp;
+			temp = "";
+			for (int i = 0; line[n] != ','; i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			subject.nameSubject = temp;
+			temp = "";
+			for (int i = 0; line[n] != ','; i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			subject.numberTheory = atoi(temp.c_str());
+			temp = "";
+			for (int i = 0; n < line.size(); i++, n++) {
+				temp.push_back(line[n]);
+			}
+			n++;
+			subject.numberPratice = atoi(temp.c_str());
+
+			InsertSubjectToTree(t, subject);
+		}
+		else {
+			break;
+		}
 	}
 }
 void ReadFileSubject(TREE_SUBJECT& t)
