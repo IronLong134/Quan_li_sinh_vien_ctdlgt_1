@@ -23,6 +23,7 @@
     <ProjectGuid>{D5C7DAC0-5CBF-4537-9266-BFDDC570FCB1}</ProjectGuid>
     <RootNamespace>QuanLiSinhVien1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>StudentManager</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

@@ -581,7 +581,7 @@ backMenu:
 
 
 				}
-				else if (key == PAGE_DOWN && pageNowSubject < totalPageSubject)
+				else if (key == KEY_RIGHT && pageNowSubject < totalPageSubject)
 				{
 					clrscr();
 					pageNowSubject++;
@@ -589,7 +589,7 @@ backMenu:
 					Display(keyDisplaySubject, sizeof(keyDisplaySubject) / sizeof(string));
 					OutputListSubjectPerPage(t, (pageNowSubject - 1) * QUANTITY_PER_PAGE);
 				}
-				else if (key == PAGE_UP && pageNowSubject > 1)
+				else if (key == KEY_LEFT && pageNowSubject > 1)
 				{
 					clrscr();
 					pageNowSubject--;

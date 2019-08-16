@@ -53,11 +53,15 @@ using namespace std;
 #define PAGE_UP 73
 #define PAGE_DOWN 81
 
+#define KEY_F1 59
 #define KEY_F2 60
 #define KEY_F3 61
 #define KEY_F4 62
 #define KEY_F5 63
 #define KEY_F6 64
+#define KEY_F7 65
+#define KEY_F8 66
+#define KEY_F9 67
 #define KEY_F10 68
 
 //vị trí sẽ hiển thị
@@ -79,6 +83,7 @@ using namespace std;
 #define X_DISPLAY 4
 #define Y_DISPLAY 10
 #define QUANTITY_PER_PAGE 5
+ 
 
 int indexOutSubject = -1;
 int currposSubject = 1;

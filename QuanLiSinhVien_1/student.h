@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include"console.h"
-
 #include"subject.h"
 #define QUALITYSTUDENT 10
 struct Student
@@ -8,8 +7,8 @@ struct Student
 	string idStudent; // tối đa 10 kí tự
 	string firstName; // tối đa 15 kí tự
 	string lastName; // tối đa 20 kí tự
-	int gender; // tối đa 5 kí tự
-	string phoneNumber; // tối đa 11 kí tự
+	int gender; // 
+	string phoneNumber; // 
 	string idClass;
 	int yearJoin;
 
@@ -292,10 +291,6 @@ void ReadStudent(ListStudent& list_student, ifstream& f)
 		else {
 			break;
 		}
-
-
-
-
 	}
 }
 void ReadFileStudent(ListStudent& list_student)
@@ -304,7 +299,6 @@ void ReadFileStudent(ListStudent& list_student)
 	if (f.is_open()) {
 		ReadStudent(list_student, f);
 		f.close();
-
 	}
 }
 void WriteFileStudent(ListStudent ds)
@@ -511,6 +505,71 @@ bool prevClass(DisplayStudent*& first, DisplayStudent*& last, DisplayStudent*& s
 		return false;
 	}
 }
+NodeStudent* SearchStudentById(ListStudent& list, string id_student) {
+	NodeStudent* search = new NodeStudent();
+	for (search = list.pHead; search != NULL; search = search->pNext) {
+		if (search->data.idStudent == id_student) {
+			return search;
+			break;
+		}
+	}
+	return NULL;
+
+}
+bool SearchClassById(ListStudent& list, string id_class) {
+	NodeStudent* search = new NodeStudent();
+	for (search = list.pHead; search != NULL; search = search->pNext) {
+		if (search->data.idClass == id_class) {
+			return true;
+			break;
+		}
+	}
+	return false;
+
+}
+void InputSearchStudent(string& id_student, bool& isSave) {
+	ShowCur(true);
+	int key = 0;
+	//bool isSave = false;
+	bool isMove = 1;
+	int ordinal = 0;
+	int distance = 0;
+	int condition = 13;
+	while (key != KEY_ESC)
+	{
+		CheckMoveAndValidateID(id_student, isMove, ordinal, isSave, distance, condition, key);
+		if (key == KEY_ESC) {
+			DeleteMenuAdd();
+			isSave = false;
+			break;
+		}
+		else if (key == KEY_ENTER) {
+
+			return;
+
+		}
+	}
+}
+void InputSearchClass(string& id_class, bool& isSave) {
+	ShowCur(true);
+	int key = 0;
+	//bool isSave = false;
+	while (key != KEY_ESC)
+	{
+		CheckMoveAndValdateIdClass(id_class, isSave, key);
+		if (key == KEY_ESC) {
+			DeleteMenuAdd();
+			isSave = false;
+			break;
+		}
+		else if (key == KEY_ENTER) {
+			if (isSave == true) {
+				return;
+			}
+
+		}
+	}
+}
 void InputClass(STUDENT& st, bool& isSave) {
 	ShowCur(true);
 	int key = 0;
@@ -683,8 +742,9 @@ void mainStudent(ListStudent& ds) {
 	ListStudentDisplay l;
 	DisplayStudent* first, * last, * select;
 	int key;
-	TutorialStudent();
+
 	do {
+		TutorialStudent();
 		ShowCur(false);
 		insertListStudent(l, ds);
 		select = first = l.first;
@@ -704,20 +764,51 @@ void mainStudent(ListStudent& ds) {
 					}
 
 					else if (key == KEY_LEFT) {
-						if (FindIndexStudent(ds, l.first->data->idStudent) > 0)
+						
 							clrscr();
-						prevClass(first, last, select);
-
+							prevClass(first, last, select);
+						
 					}
 					else if (key == KEY_RIGHT) {
-						int index = FindIndexStudent(ds, l.last->data->idStudent);
-					
-							clrscr();
-							nextClass(first, last, select);
-						
+
+						clrscr();
+						nextClass(first, last, select);
+
 					}
 				}
 
+
+
+			}
+			else if (key == KEY_F1) {
+				SetColor(ColorCode_Blue);
+				SetBGColor(ColorCode_White);
+				DisplayEdit(KeyInputClass, sizeof(KeyInputClass) / sizeof(string), 30);
+				string id_class;
+				bool isSave = false;
+				gotoXY(159, 11);
+				InputSearchClass(id_class, isSave);
+				if (isSave == true) {
+					if (SearchClassById(ds, id_class)) {
+						clrscr();
+						for (first = l.first; first != NULL && first->data->idClass != id_class; first = first->next);
+						select = first;
+						last = endList(first);
+						gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
+						SetColor(ColorCode_Red);
+						cout << "Lop ban tim kiem da hien thi" << id_class;
+					}
+					else {
+						gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
+						SetColor(ColorCode_Red);
+						cout << "lop khong ton tai, ban co muon them lop nay ko, bam F3";
+					}
+				}
+				else {
+					break;
+				}
+
+				//string id_class;
 
 
 			}
@@ -756,7 +847,7 @@ void mainStudent(ListStudent& ds) {
 			else if (key == KEY_F3) {
 				SetColor(ColorCode_Blue);
 				SetBGColor(ColorCode_White);
-				DisplayEdit(inputClass, sizeof(inputClass) / sizeof(string), 30);
+				DisplayEdit(KeyInputClass, sizeof(KeyInputClass) / sizeof(string), 30);
 				STUDENT st;
 				bool isSave = false;
 
@@ -828,6 +919,40 @@ void mainStudent(ListStudent& ds) {
 				clearAllStudentDisplay(l);
 				break;
 			}
+			else if (key == KEY_F7) {
+				SetColor(ColorCode_Blue);
+				SetBGColor(ColorCode_White);
+				DisplayEdit(keyInputIdStudent, sizeof(keyInputIdStudent[0]) / sizeof(string), 30);
+				string id_student;
+				NodeStudent* student = new NodeStudent;
+				//bool isSave = false;
+				gotoXY(159, 11);
+				//InputSearchStudent(id_student, isSave);
+				getline(cin, id_student);
+
+				student = SearchStudentById(ds, id_student);
+				if (student != NULL) {
+
+					for (first = l.first; first != NULL && first->data->idClass != student->data.idClass; first = first->next);
+					last = endList(first);
+					for (select = l.first; select != NULL && select->data->idStudent != id_student; select = select->next);
+					//select = first;
+
+					gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
+					SetColor(ColorCode_Red);
+					cout << "sinh vien ban tim kiem da hien thi" << id_student;
+				}
+				else {
+					gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
+					SetColor(ColorCode_Red);
+					cout << "Khong co sinh vien nay, bam F2 de them vao mot lp ";
+				}
+
+
+			}
+			/*clearAllStudentDisplay(l);
+			break;*/
+
 		} while (key != KEY_ESC);
 	} while (key != KEY_ESC);
 }

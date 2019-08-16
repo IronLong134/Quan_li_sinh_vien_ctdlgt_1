@@ -2,13 +2,10 @@
 #define _REGISTERSTUDENT_H
 
 #pragma once
-#include"console.h"
-#include"lib.h"
-#include"validation.h"
 #include"student.h"
 struct RegisterStudent {
 	string idStudent;//13
-	float point = -1;
+	float point = 0.0;
 };
 
 typedef struct RegisterStudent REGISTER_STUDENT;
@@ -21,7 +18,7 @@ typedef struct NodeRegisterStudent NODE_REGISTERSTUDENT;
 
 struct ListRegisterStudent {
 	int n = 0;
-	NODE_REGISTERSTUDENT* pHead, * pTail;
+	NODE_REGISTERSTUDENT* pHead = NULL, * pTail = NULL;
 };
 typedef struct ListRegisterStudent LIST_REGISTERSTUDENT;
 
@@ -59,19 +56,21 @@ void InsertTailRegisterStudentToList(LIST_REGISTERSTUDENT& l, NODE_REGISTERSTUDE
 		l.pHead = ins;
 	}
 }
-void InsertOrder(LIST_REGISTERSTUDENT& l, NODE_REGISTERSTUDENT* ins) {
+void InsertOrderToListRegister(LIST_REGISTERSTUDENT& l, NODE_REGISTERSTUDENT* ins) {
 	if (l.pHead == NULL)
 	{
 		l.pHead = l.pTail = ins;
 	}
-	NODE_REGISTERSTUDENT* run;
-	for (run = l.pHead; run != NULL && run->pNext != NULL; run = run->pNext) {
-		if (run->pNext->_registerStudent.idStudent > ins->_registerStudent.idStudent) {
-			break;
+	else {
+		NODE_REGISTERSTUDENT* run;
+		for (run = l.pHead; run != NULL && run->pNext != NULL; run = run->pNext) {
+			if (run->pNext->_registerStudent.idStudent > ins->_registerStudent.idStudent) {
+				break;
+			}
 		}
+		ins->pNext = run->pNext;
+		run->pNext = ins;
 	}
-	ins->pNext = run->pNext;
-	run->pNext = ins;
 }
 void AddHeadListRegister(LIST_REGISTERSTUDENT& l, REGISTER_STUDENT data)
 {
@@ -194,7 +193,7 @@ NODE_REGISTERSTUDENT* Middle_1(NODE_REGISTERSTUDENT* start, NODE_REGISTERSTUDENT
 }
 //
 //
-NODE_REGISTERSTUDENT* BinarySearchRegisterStudent(LIST_REGISTERSTUDENT l, char* id)
+NODE_REGISTERSTUDENT* BinarySearchRegisterStudent(LIST_REGISTERSTUDENT l, string id)
 {
 	NODE_REGISTERSTUDENT* start = l.pHead;
 	NODE_REGISTERSTUDENT* last = NULL;
@@ -205,9 +204,9 @@ NODE_REGISTERSTUDENT* BinarySearchRegisterStudent(LIST_REGISTERSTUDENT l, char* 
 
 		if (p == NULL) return NULL;
 
-		if (p->_registerStudent.idStudent== id)
+		if (p->_registerStudent.idStudent == id)
 			return p;
-		else if (p->_registerStudent.idStudent== id)
+		else if (p->_registerStudent.idStudent == id)
 		{
 
 			start = p->pNext;
@@ -220,112 +219,112 @@ NODE_REGISTERSTUDENT* BinarySearchRegisterStudent(LIST_REGISTERSTUDENT l, char* 
 	} while (start != last);
 	return NULL; // value not present;
 }
-int InputCreditClass(LIST_REGISTERSTUDENT& list, REGISTER_STUDENT student , bool isEdited = false) {
-	ShowCur(true);
-
-	bool isMoveUp = false;
-	bool isSave = false;
-	bool idIsExist = false;
-	int ordinal = 0;
-	string id_student;
-	float point = -1;
-	if (isEdited)
-	{
-		id_student = student.idStudent;
-		point = student.point;
-		gotoXY(X_ADD + 20 + 7, 0 * 3 + Y_ADD);
-		cout << id_student;
-		gotoXY(X_ADD + 17 + 7, 1 * 3 + Y_ADD);
-		cout << point;	
-	}
-	int key = 0;
-	while (true)
-	{
-		switch (ordinal)
-		{
-		case 0:
-			if (isEdited) break;
-			CheckMoveAndValidateID(id_student, isMoveUp, ordinal, isSave, 20 + 7, 12, key);
-			if (FindStudent(l, id_student) == NULL)
-			{
-				idIsExist = false;
-				break;
-			}
-			idIsExist = true;
-
-			break;
-		case 1:
-			CheckMoveAndValidateNumber(point, isMoveUp, ordinal, isSave, 21 + 7, 2019, key);
-			break;
-		}
-		if (key == KEY_ESC) {
-			DeleteMenuAdd();
-			return false;
-			break;
-		}
-		if (isMoveUp)
-		{
-			if (ordinal == 0)
-				isMoveUp = false;
-			ordinal--;
-		}
-		else
-		{
-			if (ordinal == 5)
-				isMoveUp = true;
-			ordinal++;
-		}
-		if (isSave)
-		{
-			gotoXY(X_NOTIFY, Y_NOTIFY);
-			cout << setw(50) << setfill(' ') << " ";
-			if (sex == 0 || firstName.empty() || lastName.empty() || yearJoin == 0 || phoneNumber.empty())
-			{
-				gotoXY(X_NOTIFY, Y_NOTIFY);
-				cout << "Cac truong du lieu khong dc de trong";
-			}
-			else if (idIsExist)
-			{
-				gotoXY(X_NOTIFY, Y_NOTIFY);
-				cout << "Ma sinh vien khong duoc trung";
-			}
-			else
-			{
-				StandarString(firstName);
-				StandarString(lastName);
-
-				st.idStudent = idStudent;
-				st.firstName = firstName;
-				st.lastName = lastName;
-				st.phoneNumber = phoneNumber;
-				st.gender = sex;
-
-				st.yearJoin = yearJoin;
-				StandarString(st.firstName);
-				StandarString(st.lastName);
-
-				if (isEdited)
-				{
-					NodeStudent* p = FindStudent(l, st.idStudent);
-					p->data = st;
-					return true;
-
-				}
-				else
-				{
-
-					InsertStudentInListTail(l, InitNodeStudent(st));
-					return true;
-				}
-				//totalPageStudent = ((l.n - 1) / QUANTITY_PER_PAGE) + 1;
-
-			}
-			isSave = false;
-		}
-		else
-		{
-			isSave = false;
-		}
-	}
-	ShowCur(false);
-}
+//int InputRegister(ListStudent l,LIST_REGISTERSTUDENT& list, REGISTER_STUDENT student , bool isEdited = false) {
+//	ShowCur(true);
+//
+//	bool isMoveUp = false;
+//	bool isSave = false;
+//	bool idIsExist = false;
+//	int ordinal = 0;
+//	string id_student;
+//	int point = -1;
+//	if (isEdited)
+//	{
+//		id_student = student.idStudent;
+//		point = student.point;
+//		gotoXY(X_ADD + 20 + 7, 0 * 3 + Y_ADD);
+//		cout << id_student;
+//		gotoXY(X_ADD + 17 + 7, 1 * 3 + Y_ADD);
+//		cout << point;	
+//	}
+//	int key = 0;
+//	while (true)
+//	{
+//		switch (ordinal)
+//		{
+//		case 0:
+//			if (isEdited) break;
+//			CheckMoveAndValidateID(id_student, isMoveUp, ordinal, isSave, 20 + 7, 12, key);
+//			if (FindStudent(l, id_student) == NULL)
+//			{
+//				idIsExist = false;
+//				break;
+//			}
+//			idIsExist = true;
+//
+//			break;
+//		case 1:
+//			CheckMoveAndValidateNumber(point, isMoveUp, ordinal, isSave, 21 + 7, 2019, key);
+//			break;
+//		}
+//		if (key == KEY_ESC) {
+//			DeleteMenuAdd();
+//			return false;
+//			break;
+//		}
+//		if (isMoveUp)
+//		{
+//			if (ordinal == 0)
+//				isMoveUp = false;
+//			ordinal--;
+//		}
+//		else
+//		{
+//			if (ordinal == 5)
+//				isMoveUp = true;
+//			ordinal++;
+//		}
+//		if (isSave)
+//		{
+//			gotoXY(X_NOTIFY, Y_NOTIFY);
+//			cout << setw(50) << setfill(' ') << " ";
+//			if (id_student.empty()==0 )
+//			{
+//				gotoXY(X_NOTIFY, Y_NOTIFY);
+//				cout << "Cac truong du lieu khong dc de trong";
+//			}
+//			else if (idIsExist)
+//			{
+//				gotoXY(X_NOTIFY, Y_NOTIFY);
+//				cout << "Ma sinh vien khong duoc trung";
+//			}
+//			else
+//			{
+//				StandarString(id_student);
+//				
+//
+//				st.idStudent = idStudent;
+//				st.firstName = firstName;
+//				st.lastName = lastName;
+//				st.phoneNumber = phoneNumber;
+//				st.gender = sex;
+//
+//				st.yearJoin = yearJoin;
+//				StandarString(st.firstName);
+//				StandarString(st.lastName);
+//
+//				if (isEdited)
+//				{
+//					NodeStudent* p = FindStudent(l, st.idStudent);
+//					p->data = st;
+//					return true;
+//
+//				}
+//				else
+//				{
+//
+//					InsertStudentInListTail(l, InitNodeStudent(st));
+//					return true;
+//				}
+//				//totalPageStudent = ((l.n - 1) / QUANTITY_PER_PAGE) + 1;
+//
+//			}
+//			isSave = false;
+//		}
+//		else
+//		{
+//			isSave = false;
+//		}
+//	}
+//	ShowCur(false);
+//}

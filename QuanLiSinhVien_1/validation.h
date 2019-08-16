@@ -84,7 +84,7 @@ void CheckMoveAndValidateStringNumber(string& result, bool& isMove, int& ordinal
 	}
 
 }
-void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& isSave, int distance, int condition, int &key)// isMove : có lên xuống ko, ordinal: thứ tự, isSava: đã lưu đc chưa ,distance: vị trí con trỏ 
+void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& isSave, int distance, int condition, int &key)// isMove : có lên xuống ko, ordinal: thứ tự, isSava: đã lưu đc chưa ,distance: vị trí con trỏ condition: điều kiện
 {
 	int lengh = result.length();
 	gotoXY(X_ADD + distance, ordinal * 3 + Y_ADD);    //ordinnal : tận dụng để thay đổi Y
@@ -110,6 +110,7 @@ void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& is
 
 				}
 				else if (key == KEY_ENTER) {
+					isSave = true;
 					key = 0;
 					return;
 				}
@@ -143,6 +144,9 @@ void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& is
 					isSave = true;
 					return;
 				}
+			}
+			else if (key == KEY_ESC) {
+				break;
 			}
 		}//kbhit
 	} 

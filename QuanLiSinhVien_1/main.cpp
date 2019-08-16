@@ -61,7 +61,7 @@ void main() {
 		changeSelectMenu(select, 6, key);
 		if (key == KEY_ENTER) {
 			if (select == 4) {
-				return;
+				break;
 			}
 			else if (select == 0) {
 
@@ -94,8 +94,13 @@ void main() {
 				WriteFileCreditClass(list_credit_class);
 				clrscr();
 			}
+			else if (select == 3) {
+				clrscr();
+
+				OutputListChooseCreditClass(list_credit_class, t,1 ,1, "N14DCCN300" );
+			}
 		}
 	}
-	system("pause");
+	WriteFileCreditClass(list_credit_class);
 	return;
 }

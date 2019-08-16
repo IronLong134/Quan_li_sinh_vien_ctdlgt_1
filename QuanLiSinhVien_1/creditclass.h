@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 #include"subject.h"
-//#include"registerstudent.h"
+#include"registerstudent.h"
 
 
 struct CreditClass {
-	unsigned int idClass;
+	unsigned int idClass = 0;
 	string idSubject; // ma mon hoc // key
 	string nameSubject;
 	int shoolYear; // nien khoa
@@ -14,7 +14,7 @@ struct CreditClass {
 	int studentMax;
 	int studentMin;
 
-	//LIST_REGISTERSTUDENT listRegisterStudent;
+	LIST_REGISTERSTUDENT listRegisterStudent;
 };
 typedef struct CreditClass CREDITCLASS;
 typedef CREDITCLASS* PTR_CREDITCLASS;
@@ -145,7 +145,19 @@ PTR_CREDITCLASS FindCrediClassWithCondition(LIST_CREDITCLASS l, string idSubject
 	}
 	return NULL;
 }
+PTR_CREDITCLASS FindCrediClassWithConditionRegister(LIST_CREDITCLASS l, int shoolYear, int semester)
+{
 
+	for (int i = 0; i < l.n; i++)
+	{
+		if (
+			l.listCreditClass[i]->shoolYear == shoolYear && l.listCreditClass[i]->semester == semester)
+		{
+			return l.listCreditClass[i];
+		}
+	}
+	return NULL;
+}
 //hàm input 
 
 void InputCreditClass(LIST_CREDITCLASS& l, CREDITCLASS& cc, TREE_SUBJECT t, bool isEdited = false) // nhap  Lop TC
@@ -288,8 +300,9 @@ void InputCreditClass(LIST_CREDITCLASS& l, CREDITCLASS& cc, TREE_SUBJECT t, bool
 				}
 				else
 				{
-					cc.idClass = l.listCreditClass[l.n - 1]->idClass + 1;
-					////InitListRegisterStudent(cc->listRegisterStudent);
+					if(l.n!= 0)
+						cc.idClass = l.listCreditClass[l.n - 1]->idClass + 1;
+					//InitListRegisterStudent(cc->listRegisterStudent);
 					//l.listCreditClass[l.n] = new CREDITCLASS;
 					//l.listCreditClass[l.n] = cc;
 
@@ -434,6 +447,76 @@ int ChooseCreditClass(LIST_CREDITCLASS l, TREE_SUBJECT t)
 		}
 	}
 }
+void AddToListTemp(LIST_CREDITCLASS& list_temp, PTR_CREDITCLASS credit_class) {
+	if (list_temp.n < 5000) {
+		list_temp.listCreditClass[list_temp.n++] = credit_class;
+	}
+}
+
+void ViewCreditClass(LIST_CREDITCLASS l, int select) {
+	if (l.listCreditClass[0] != NULL) {
+		CreditClass c;
+		gotoXY(X_DISPLAY, Y_DISPLAY - 5);
+		SetColor(ColorCode_Blue);
+		SetBGColor(ColorCode_White);
+		cout << l.listCreditClass[0]->shoolYear;
+		for (int i = 0; i < l.n; i++) {
+			if (i == select) {
+				//chỉnh màu
+				SetBGColor(ColorCode_Blue);
+				SetColor(ColorCode_White);
+			}
+			else {
+				SetColor(ColorCode_Blue);
+				SetBGColor(ColorCode_White);
+				//chỉnh màu
+			}
+			c = *l.listCreditClass[i];
+			//them gotoXY
+			gotoXY(X_DISPLAY, Y_DISPLAY + i);
+			cout << c.idClass << " - " << c.nameSubject;
+		}
+	}
+}
+
+void OutputListChooseCreditClass(LIST_CREDITCLASS &l, TREE_SUBJECT t, int year, int semester, string id_student) {
+	LIST_CREDITCLASS listTemp;
+	for (int i = 0; i < l.n; i++) {
+		if (l.listCreditClass[i]->shoolYear == year && l.listCreditClass[i]->semester) {
+			AddToListTemp(listTemp, l.listCreditClass[i]);
+		}
+	}
+
+	int select = 0, key;
+	if (listTemp.n != 0) {
+		do {
+			ViewCreditClass(listTemp, select);
+			key = _getch();
+			if (key == KEY_CONTROL) {
+				key = getch();
+				if (key == KEY_UP) {
+					if (select != 0) {
+						select--;
+					}
+				}
+				else if (key == KEY_DOWN) {
+					if (select != listTemp.n - 1) {
+						select++;
+					}
+				}
+			}
+			else if (key == KEY_ENTER) {
+				InsertOrderToListRegister(listTemp.listCreditClass[select]->listRegisterStudent, InitNodeRegisterStudent({ id_student , 0.0 }));
+			}
+		} while (key != KEY_ESC && key != KEY_ENTER);
+		if (key == KEY_ENTER) {
+			gotoXY(X_ADD, Y_ADD);
+			cout << listTemp.listCreditClass[select]->listRegisterStudent.pHead->_registerStudent.idStudent;
+			while (_getch() != KEY_ENTER);
+			clrscr();
+		}
+	}
+}
 
 void ChangePageManageCreaditClass(LIST_CREDITCLASS l, TREE_SUBJECT t)
 {
@@ -457,12 +540,12 @@ backMenu:
 	gotoXY(X_TITLE, Y_TITLE); cout << "QUAN LY DANH SACH LOP TIN CHI";
 	gotoXY(X_PAGE, Y_PAGE);
 	if (l.n % QUANTITY_PER_PAGE == 0) {
-		totalPageCreditClass = l.n / QUANTITY_PER_PAGE ;
+		totalPageCreditClass = l.n / QUANTITY_PER_PAGE;
 	}
 	else {
-		totalPageCreditClass = l.n / QUANTITY_PER_PAGE+1;
+		totalPageCreditClass = l.n / QUANTITY_PER_PAGE + 1;
 	}
-	
+
 	cout << "Trang " << pageNowCreditClass << "/" << totalPageCreditClass;
 	while (true)
 	{
@@ -663,15 +746,19 @@ void WriteFileCreditClass(ListCreaditClass list)
 	ofstream f("creditclass.txt");
 	if (f.is_open()) {
 		PTR_CREDITCLASS* credit_class;
-		for (int i = 0; i<list.n; i++) {
-			f <<list.listCreditClass[i]->idClass<<","<<
+		for (int i = 0; i < list.n; i++) {
+			f << list.listCreditClass[i]->idClass << "," <<
 				list.listCreditClass[i]->idSubject << "," <<
 				list.listCreditClass[i]->nameSubject << "," <<
 				list.listCreditClass[i]->shoolYear << "," <<
 				list.listCreditClass[i]->semester << "," <<
-				list.listCreditClass[i]->group<< "," <<
+				list.listCreditClass[i]->group << "," <<
 				list.listCreditClass[i]->studentMax << "," <<
-				list.listCreditClass[i]->studentMin << endl;
+				list.listCreditClass[i]->studentMin << ",";
+			for (NodeRegisterStudent* run = list.listCreditClass[i]->listRegisterStudent.pHead; run != NULL; run = run->pNext) {
+				f << run->_registerStudent.idStudent << "," << run->_registerStudent.point << ",";
+			}
+			f  << endl;
 		}
 		f.close();
 	}
