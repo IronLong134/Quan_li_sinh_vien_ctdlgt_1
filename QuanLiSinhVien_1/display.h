@@ -8,6 +8,7 @@ string keyDisplayCreaditClassEdit[6] = { "Ma MH:", "NK:", "Hoc Ki:", "Nhom:", "S
 string keyDisplayStudent[6] = { "Ma SV:", "Ho:", "ten:", "gioi","SDT","khoa" };
 string KeyInputClass[1] = { "ma lop:" };
 string keyInputIdStudent[1] = { "ma sv:" };
+string keySearchCredit[2] = { "Nien khoa:","Hoc ki:" };
 int xKeyDisplay[9] = { 5,25,65,85,100, 110, 120, 140, 150 };//20 40 70 80 90 120 150 
 
 void logoName()
@@ -234,6 +235,15 @@ void DeleteMenuAdd()
 	for (int i = 0; i < 20; i++)
 	{
 		gotoXY(X_ADD + 2, Y_ADD + i - 1);
+		cout << setw(60) << setfill(' ') << " ";
+	}
+}
+void Clrscr_Frame(int x,int y, int width, int hight)
+{
+
+	for (int i = 0; i < width; i++)
+	{
+		gotoXY(x + 2, y + i - 1);
 		cout << setw(60) << setfill(' ') << " ";
 	}
 }

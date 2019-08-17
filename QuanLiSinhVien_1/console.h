@@ -66,10 +66,10 @@ using namespace std;
 
 //vị trí sẽ hiển thị
 
-#define X_ADD 130
+#define X_ADD 135
 #define Y_ADD 11
 
-#define X_NOTIFY 120
+#define X_NOTIFY 160
 #define Y_NOTIFY 40
 
 #define X_TITLE 30

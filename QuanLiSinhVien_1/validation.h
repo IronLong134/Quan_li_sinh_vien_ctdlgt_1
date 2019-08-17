@@ -152,7 +152,52 @@ void CheckMoveAndValidateID(string& result, bool& isMove, int& ordinal, bool& is
 	} 
 
 }
+void CheckMoveAndValidateIdStudent(string& id_student, bool& isSave, int& key) {
+	int lengh = id_student.length();
+	//gotoXY(X_ADD + distance, Y_ADD);
+	cout << id_student;
+	int count = lengh;
+	while (key != KEY_ESC)
+	{
+		while (_kbhit())
+		{
+			key = _getch();
+			if (key != 224 && key != SPACE && key != 0)
+			{
+				if ((key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key >= 48 && key <= 57))
+				{
+					if (count < 10)
+					{
+						count++;
+						char key1 = (char)key;
+						//cout << Lower(key1);
+						char keyLower = Lower(key1);
+						cout << keyLower;
+						id_student += keyLower;
+					}
 
+				}if (key == KEY_ESC) {
+					isSave = false;
+					break;
+				}
+				else if (key == KEY_ENTER) {
+					isSave = true;
+					return;
+				}
+
+				else if (key == KEY_BACKSPACE && count > 0)
+				{
+					cout << "\b" << " " << "\b";
+					id_student.erase(id_student.length() - 1, 1);
+
+					count--;
+
+				}
+			}
+
+		}//kbhit
+	} 
+}
 void CheckMoveAndValdateIdClass(string& result,bool& isSave,int& key)
 {
 	int lengh = result.length();

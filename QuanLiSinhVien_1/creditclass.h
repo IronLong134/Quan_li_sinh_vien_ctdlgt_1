@@ -145,21 +145,33 @@ PTR_CREDITCLASS FindCrediClassWithCondition(LIST_CREDITCLASS l, string idSubject
 	}
 	return NULL;
 }
-PTR_CREDITCLASS FindCrediClassWithConditionRegister(LIST_CREDITCLASS l, int shoolYear, int semester)
+bool FindCrediClassWithConditionRegister(LIST_CREDITCLASS l, int shoolYear, int semester)
 {
 
 	for (int i = 0; i < l.n; i++)
 	{
-		if (
-			l.listCreditClass[i]->shoolYear == shoolYear && l.listCreditClass[i]->semester == semester)
+		if (l.listCreditClass[i]->shoolYear == shoolYear && l.listCreditClass[i]->semester == semester)
 		{
-			return l.listCreditClass[i];
+			return true;
+
 		}
 	}
-	return NULL;
+	return false;
 }
 //hàm input 
+bool CheckRegisterIsExist(PTR_CREDITCLASS cc, string id_student) {
+	LIST_REGISTERSTUDENT list_register = cc->listRegisterStudent;
 
+	if (list_register.pHead == NULL) return NULL;
+	for (NODE_REGISTERSTUDENT* p = list_register.pHead; p != NULL; p = p->pNext)
+	{
+		if (p->_registerStudent.idStudent == id_student) {
+			return true;
+		}
+
+	}
+	return false;
+}
 void InputCreditClass(LIST_CREDITCLASS& l, CREDITCLASS& cc, TREE_SUBJECT t, bool isEdited = false) // nhap  Lop TC
 {
 	ShowCur(true);
@@ -300,7 +312,7 @@ void InputCreditClass(LIST_CREDITCLASS& l, CREDITCLASS& cc, TREE_SUBJECT t, bool
 				}
 				else
 				{
-					if(l.n!= 0)
+					if (l.n != 0)
 						cc.idClass = l.listCreditClass[l.n - 1]->idClass + 1;
 					//InitListRegisterStudent(cc->listRegisterStudent);
 					//l.listCreditClass[l.n] = new CREDITCLASS;
@@ -447,15 +459,69 @@ int ChooseCreditClass(LIST_CREDITCLASS l, TREE_SUBJECT t)
 		}
 	}
 }
+void InputSearchCreditClass(LIST_CREDITCLASS list, int& year, int& semester, bool& isSave) {
+	ShowCur(true);
+	// cac flag dieu khien qua trinh cap nhat
+	int ordinal = 0;
+	bool isMoveUp = false;
+	int key = 0;
+	while (key != KEY_ESC)
+	{
+		switch (ordinal)
+		{
+		case 0:
+			CheckMoveAndValidateNumber(year, isMoveUp, ordinal, isSave, 30, 3000, key);
+			break;
+		case 1:
+			CheckMoveAndValidateNumber(semester, isMoveUp, ordinal, isSave, 27, 4, key);
+			break;
+		}
+		if (key == KEY_ESC)break;
+		if (isMoveUp)
+		{
+			if (ordinal == 0)
+				isMoveUp = false;
+			ordinal--;
+
+		}
+		else
+		{
+			if (ordinal == 1)
+				isMoveUp = true;
+			ordinal++;
+		}
+		if (isSave)
+		{
+			gotoXY(X_NOTIFY + 10, Y_NOTIFY);
+			cout << setw(50) << setfill(' ') << " ";
+
+			if (year == NULL || semester == NULL)
+			{
+				gotoXY(X_NOTIFY, Y_NOTIFY); cout << "Cac truong du lieu khong duoc de trong";
+			}
+			else if (FindCrediClassWithConditionRegister(list, year, semester) == false)
+			{
+				gotoXY(X_NOTIFY, Y_NOTIFY); cout << "Khong co lop tin chi nao thoa man dieu kien";
+			}
+			else {
+				isSave = true;
+				return;
+			}
+
+		}
+		else
+			isSave = false;
+	}
+}
 void AddToListTemp(LIST_CREDITCLASS& list_temp, PTR_CREDITCLASS credit_class) {
 	if (list_temp.n < 5000) {
 		list_temp.listCreditClass[list_temp.n++] = credit_class;
 	}
 }
 
-void ViewCreditClass(LIST_CREDITCLASS l, int select) {
+void ViewCreditClass(LIST_CREDITCLASS l, TREE_SUBJECT t, int select) {
 	if (l.listCreditClass[0] != NULL) {
-		CreditClass c;
+		PTR_CREDITCLASS c;
 		gotoXY(X_DISPLAY, Y_DISPLAY - 5);
 		SetColor(ColorCode_Blue);
 		SetBGColor(ColorCode_White);
@@ -471,26 +537,27 @@ void ViewCreditClass(LIST_CREDITCLASS l, int select) {
 				SetBGColor(ColorCode_White);
 				//chỉnh màu
 			}
-			c = *l.listCreditClass[i];
+			c = l.listCreditClass[i];
 			//them gotoXY
-			gotoXY(X_DISPLAY, Y_DISPLAY + i);
-			cout << c.idClass << " - " << c.nameSubject;
+			//gotoXY(X_DISPLAY, Y_DISPLAY + i);
+			//cout << c.idClass << " - " << c.nameSubject;
+			OutputCreditClass(c, t, i);
 		}
 	}
 }
 
-void OutputListChooseCreditClass(LIST_CREDITCLASS &l, TREE_SUBJECT t, int year, int semester, string id_student) {
+void OutputListChooseCreditClass(LIST_CREDITCLASS& l, TREE_SUBJECT t, int year, int semester, string id_student) {
 	LIST_CREDITCLASS listTemp;
 	for (int i = 0; i < l.n; i++) {
-		if (l.listCreditClass[i]->shoolYear == year && l.listCreditClass[i]->semester) {
+		if ((l.listCreditClass[i]->shoolYear == year) && (l.listCreditClass[i]->semester == semester)) {
 			AddToListTemp(listTemp, l.listCreditClass[i]);
 		}
 	}
-
-	int select = 0, key;
+	gotoXY(X_DISPLAY, Y_DISPLAY - 3); cout << "MSSV : " << id_student;
+	int select = 0, key = 0;
 	if (listTemp.n != 0) {
-		do {
-			ViewCreditClass(listTemp, select);
+		while (key != KEY_ESC) {
+			ViewCreditClass(listTemp, t, select);
 			key = _getch();
 			if (key == KEY_CONTROL) {
 				key = getch();
@@ -505,16 +572,95 @@ void OutputListChooseCreditClass(LIST_CREDITCLASS &l, TREE_SUBJECT t, int year, 
 					}
 				}
 			}
-			else if (key == KEY_ENTER) {
-				InsertOrderToListRegister(listTemp.listCreditClass[select]->listRegisterStudent, InitNodeRegisterStudent({ id_student , 0.0 }));
+			if (key == KEY_ENTER) {
+				if (CheckRegisterIsExist(listTemp.listCreditClass[select], id_student) == true) {
+					gotoXY(X_NOTIFY, Y_NOTIFY);
+					cout << "BAN DA DANG KI LOP TIN CHI NAY";
+
+				}
+				else {
+					InsertOrderToListRegister(listTemp.listCreditClass[select]->listRegisterStudent, InitNodeRegisterStudent({ id_student , 0.0 }));
+					gotoXY(X_NOTIFY, Y_NOTIFY);
+					cout << "DANG KI THANH CONG";
+				}
+
+				//while (_getch() != KEY_ESC)break;
+				//clrscr();
 			}
-		} while (key != KEY_ESC && key != KEY_ENTER);
-		if (key == KEY_ENTER) {
-			gotoXY(X_ADD, Y_ADD);
-			cout << listTemp.listCreditClass[select]->listRegisterStudent.pHead->_registerStudent.idStudent;
-			while (_getch() != KEY_ENTER);
-			clrscr();
+			if (key == KEY_ESC) {
+				clrscr();
+				return;
+			}
+			/*	else if (key == KEY_ENTER) {
+					if (CheckRegisterIsExist(listTemp.listCreditClass[select], id_student) == true) {
+						gotoXY(X_NOTIFY, Y_NOTIFY);
+
+					}
+					InsertOrderToListRegister(listTemp.listCreditClass[select]->listRegisterStudent, InitNodeRegisterStudent({ id_student , 0.0 }));
+				}*/
 		}
+
+	}
+}
+void managerChooseCreditClass(LIST_CREDITCLASS& l, ListStudent list_student, TREE_SUBJECT t) {
+	clrscr();
+	int key = 0;
+	bool isSave = false;
+	clrscr();
+	//key = _getch();
+	while (key != KEY_ESC) {
+
+		
+		SetColor(ColorCode_Blue);
+		gotoXY(getXScreen() / 2 - 30, 10);
+
+		cout << "NHAP MA SINH VIEN CAN DANG KI TIN CHI" << endl;
+		gotoXY(getXScreen() / 2 - 30, 12);
+		cout << "========================";
+		//DisplayEdit(keyInputIdStudent, 1, 30);
+
+		string id_student = "";
+		gotoXY(getXScreen() / 2 - 30, 11);
+		ShowCur(true);
+
+
+		//bool isSave = false;
+		InputSearchStudent(id_student, isSave);
+		if (isSave == true) {
+
+			if (SearchStudentById(list_student, id_student)) {
+				clrscr();
+				int year = 0, semester = 0;
+				DisplayEdit(keySearchCredit, 2, 30);
+				gotoXY(X_ADD + 2, Y_ADD - 3);
+				cout << "NHAP DIEU KIEN DE DANG KI , BAM F10 DE TIM" << endl;
+				Display(keyDisplayCreditClass, 8);
+				InputSearchCreditClass(l, year, semester, isSave);
+				if (isSave == true) {
+					//clrscr();
+					OutputListChooseCreditClass(l, t, year, semester, id_student);
+				}
+			}
+			else {
+				gotoXY(getXScreen() / 2 - 30, 11);
+				cout << setw(50) << setfill(' ') << " ";
+				gotoXY(getXScreen() / 2 - 30, 30);
+				SetColor(ColorCode_Red);
+				cout << "MA SINH VIEN KHONG TON TAI , MOI BAN NHAP LAI, NHAN ENTER DE NHAP LAI";
+				if (key == KEY_ESC) {
+					break;
+				}
+			}
+		}
+		else {
+			clrscr();
+			break;
+		}
+		if (key == KEY_ESC) {
+			clrscr();
+			break;
+		}
+
 	}
 }
 
@@ -758,7 +904,7 @@ void WriteFileCreditClass(ListCreaditClass list)
 			for (NodeRegisterStudent* run = list.listCreditClass[i]->listRegisterStudent.pHead; run != NULL; run = run->pNext) {
 				f << run->_registerStudent.idStudent << "," << run->_registerStudent.point << ",";
 			}
-			f  << endl;
+			f << endl;
 		}
 		f.close();
 	}

@@ -505,7 +505,7 @@ bool prevClass(DisplayStudent*& first, DisplayStudent*& last, DisplayStudent*& s
 		return false;
 	}
 }
-NodeStudent* SearchStudentById(ListStudent& list, string id_student) {
+NodeStudent* SearchStudentById(ListStudent list, string id_student) {
 	NodeStudent* search = new NodeStudent();
 	for (search = list.pHead; search != NULL; search = search->pNext) {
 		if (search->data.idStudent == id_student) {
@@ -531,24 +531,25 @@ void InputSearchStudent(string& id_student, bool& isSave) {
 	ShowCur(true);
 	int key = 0;
 	//bool isSave = false;
-	bool isMove = 1;
-	int ordinal = 0;
-	int distance = 0;
-	int condition = 13;
+
+	key = _getch();
 	while (key != KEY_ESC)
 	{
-		CheckMoveAndValidateID(id_student, isMove, ordinal, isSave, distance, condition, key);
+		CheckMoveAndValidateIdStudent(id_student, isSave, key);
 		if (key == KEY_ESC) {
-			DeleteMenuAdd();
+			//DeleteMenuAdd();
 			isSave = false;
 			break;
 		}
 		else if (key == KEY_ENTER) {
+			if (isSave == true) {
+				DeleteMenuAdd();
+				return;
 
-			return;
-
+			}
 		}
 	}
+	
 }
 void InputSearchClass(string& id_class, bool& isSave) {
 	ShowCur(true);
@@ -764,10 +765,10 @@ void mainStudent(ListStudent& ds) {
 					}
 
 					else if (key == KEY_LEFT) {
-						
-							clrscr();
-							prevClass(first, last, select);
-						
+
+						clrscr();
+						prevClass(first, last, select);
+
 					}
 					else if (key == KEY_RIGHT) {
 
@@ -786,11 +787,15 @@ void mainStudent(ListStudent& ds) {
 				DisplayEdit(KeyInputClass, sizeof(KeyInputClass) / sizeof(string), 30);
 				string id_class;
 				bool isSave = false;
+				gotoXY(155, 8); cout << "HAY NHAP MA LOP CAN TIM";
 				gotoXY(159, 11);
 				InputSearchClass(id_class, isSave);
+				DeleteMenuAdd();
+				Clrscr_Frame(140, 8, 10, 4);
 				if (isSave == true) {
 					if (SearchClassById(ds, id_class)) {
 						clrscr();
+						TutorialStudent();
 						for (first = l.first; first != NULL && first->data->idClass != id_class; first = first->next);
 						select = first;
 						last = endList(first);
@@ -924,28 +929,39 @@ void mainStudent(ListStudent& ds) {
 				SetBGColor(ColorCode_White);
 				DisplayEdit(keyInputIdStudent, sizeof(keyInputIdStudent[0]) / sizeof(string), 30);
 				string id_student;
-				NodeStudent* student = new NodeStudent;
+				bool isSave = false;
+			
 				//bool isSave = false;
+				gotoXY(150,9); cout << "HAY NHAP MA SINH VIEN CAN TIM";
 				gotoXY(159, 11);
-				//InputSearchStudent(id_student, isSave);
-				getline(cin, id_student);
+				InputSearchStudent(id_student, isSave);
+				//getline(cin, id_student);
+				//clrscr();
+				DeleteMenuAdd();
+				Clrscr_Frame(140, 8,10,4);
+				if (isSave == true) {
+					NodeStudent* student = new NodeStudent;
+					student = SearchStudentById(ds, id_student);
+					if (student != NULL) {
+						clrscr();
+						TutorialStudent();
+						for (first = l.first; first != NULL && first->data->idClass != student->data.idClass; first = first->next);
+						last = endList(first);
+						for (select = l.first; select != NULL && select->data->idStudent != id_student; select = select->next);
+						//select = first;
 
-				student = SearchStudentById(ds, id_student);
-				if (student != NULL) {
-
-					for (first = l.first; first != NULL && first->data->idClass != student->data.idClass; first = first->next);
-					last = endList(first);
-					for (select = l.first; select != NULL && select->data->idStudent != id_student; select = select->next);
-					//select = first;
-
-					gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
-					SetColor(ColorCode_Red);
-					cout << "sinh vien ban tim kiem da hien thi" << id_student;
+						gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
+						SetColor(ColorCode_Red);
+						cout << "sinh vien ban tim kiem da hien thi" << id_student;
+					}
+					else {
+						gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
+						SetColor(ColorCode_Red);
+						cout << "Khong co sinh vien nay, bam F2 de them vao mot lp ";
+					}
 				}
 				else {
-					gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
-					SetColor(ColorCode_Red);
-					cout << "Khong co sinh vien nay, bam F2 de them vao mot lp ";
+					break;
 				}
 
 

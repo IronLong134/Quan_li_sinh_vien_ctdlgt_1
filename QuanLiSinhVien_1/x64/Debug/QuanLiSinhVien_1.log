@@ -26,13 +26,14 @@ F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1630,7): warning C4101:  'KT': unrefe
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1732,7): warning C4101:  'KT': unreferenced local variable
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(27,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(89,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(158,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(207,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(279,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(425,24): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(156,33): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(203,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(252,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(324,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(470,24): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(244,6): warning C4101:  'key': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(386,6): warning C4101:  'key': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(748,20): warning C4101:  'credit_class': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(398,6): warning C4101:  'key': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(894,20): warning C4101:  'credit_class': unreferenced local variable
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(13,13): warning C4326:  return type of 'main' should be 'int' instead of 'void'
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(13,13): warning C4326: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(161) : warning C4715: 'DeleteNodeSubject': not all control paths return a value
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(13,13): warning C4326: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(334) : warning C4715: 'ChooseSubject': not all control paths return a value

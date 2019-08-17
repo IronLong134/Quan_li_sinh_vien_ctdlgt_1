@@ -50,6 +50,7 @@ void main() {
 	ReadFileCreditClass(list_credit_class);
 	while (true)
 	{
+		//clrscr();
 
 		logoName();
 		Xu_Li_Con_Tro_Chi_Vi(0);
@@ -58,7 +59,7 @@ void main() {
 		//hienThiMenu(thongTinMenuMonHoc, 0, 2, 4, 25, ColorCode_White, ColorCode_Cyan);
 		//hienThiThongTinMonHoc(mhtt, 0, 0, ColorCode_Cyan);
 		key = _getch();
-		changeSelectMenu(select, 6, key);
+		changeSelectMenu(select, 5, key);
 		if (key == KEY_ENTER) {
 			if (select == 4) {
 				break;
@@ -96,11 +97,13 @@ void main() {
 			}
 			else if (select == 3) {
 				clrscr();
-
-				OutputListChooseCreditClass(list_credit_class, t,1 ,1, "N14DCCN300" );
+				SetColor(ColorCode_Blue);
+				SetBGColor(ColorCode_White);
+				managerChooseCreditClass(list_credit_class,ds,t);
+				//OutputListChooseCreditClass(list_credit_class, t,1 ,1, "N14DCCN300" );
 			}
 		}
 	}
-	WriteFileCreditClass(list_credit_class);
+	//WriteFileCreditClass(list_credit_class);
 	return;
 }
