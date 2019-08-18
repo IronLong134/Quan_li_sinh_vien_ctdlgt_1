@@ -9,6 +9,8 @@ string keyDisplayStudent[6] = { "Ma SV:", "Ho:", "ten:", "gioi","SDT","khoa" };
 string KeyInputClass[1] = { "ma lop:" };
 string keyInputIdStudent[1] = { "ma sv:" };
 string keySearchCredit[2] = { "Nien khoa:","Hoc ki:" };
+string keySearchOnlyCredit[4] = { "Mon Hoc:","Nien khoa:","Hoc ki:","Nhom:" };
+string keyAddScore[3] = { "Ma SV:","Ten SV","Diem:" };
 int xKeyDisplay[9] = { 5,25,65,85,100, 110, 120, 140, 150 };//20 40 70 80 90 120 150 
 
 void logoName()
@@ -226,8 +228,9 @@ void TutorialStudent() {
 	gotoXY(X_ADD, Y_ADD + 30+4); cout << "F3:Them lop moi";
 	gotoXY(X_ADD, Y_ADD + 30+6); cout << "F4:Xoa sinh vien trong lop do(khong the xoa het ds)";
 	gotoXY(X_ADD, Y_ADD + 30 + 8); cout << "F5:Xoa mot lop, tat ca sinh vien trong lp se mat ";
-	gotoXY(X_ADD, Y_ADD + 30 + 10); cout << "F10: Luu them va sua ";
-	gotoXY(X_ADD, Y_ADD + 30 + 12); cout << "ESC: Huy bo thao tac ";
+	gotoXY(X_ADD, Y_ADD + 30 + 10); cout << "F7:TIM KIEM SINH VIEN THEO MA";
+	gotoXY(X_ADD, Y_ADD + 30 + 12); cout << "F10: Luu them va sua ";
+	gotoXY(X_ADD, Y_ADD + 30 + 14); cout << "ESC: Huy bo thao tac ";
 }
 void DeleteMenuAdd()
 {

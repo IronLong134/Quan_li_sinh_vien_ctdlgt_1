@@ -48,9 +48,10 @@ NodeStudent* FindStudent(ListStudent l, string id)
 {
 	if (l.pHead == NULL) return NULL;
 
-	for (NodeStudent* p = l.pHead; p != NULL; p = p->pNext)
+	for (NodeStudent* p = l.pHead; p != NULL; p = p->pNext) {
 		if (p->data.idStudent == id)
 			return p;
+	}
 	return NULL;
 }
 void InsertStudentToListHead(ListStudent& ds, NodeStudent* ins)
@@ -532,7 +533,6 @@ void InputSearchStudent(string& id_student, bool& isSave) {
 	int key = 0;
 	//bool isSave = false;
 
-	key = _getch();
 	while (key != KEY_ESC)
 	{
 		CheckMoveAndValidateIdStudent(id_student, isSave, key);
@@ -767,12 +767,16 @@ void mainStudent(ListStudent& ds) {
 					else if (key == KEY_LEFT) {
 
 						clrscr();
+						
+						TutorialStudent();
 						prevClass(first, last, select);
 
 					}
 					else if (key == KEY_RIGHT) {
 
 						clrscr();
+						
+						TutorialStudent();
 						nextClass(first, last, select);
 
 					}
@@ -887,9 +891,10 @@ void mainStudent(ListStudent& ds) {
 				Xu_Li_Con_Tro_Chi_Vi(TRUE);
 				SetColor(ColorCode_Blue);
 				SetBGColor(ColorCode_White);
-				bool change = false;
+				bool change = true;
 				DisplayEdit(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string), 35);
 				InputStudent(ds, *select->data, change);
+				
 				Xu_Li_Con_Tro_Chi_Vi(FALSE);
 			}
 			else if (key == KEY_F5) {
@@ -933,7 +938,7 @@ void mainStudent(ListStudent& ds) {
 			
 				//bool isSave = false;
 				gotoXY(150,9); cout << "HAY NHAP MA SINH VIEN CAN TIM";
-				gotoXY(159, 11);
+				gotoXY(165, 11);
 				InputSearchStudent(id_student, isSave);
 				//getline(cin, id_student);
 				//clrscr();
@@ -950,12 +955,12 @@ void mainStudent(ListStudent& ds) {
 						for (select = l.first; select != NULL && select->data->idStudent != id_student; select = select->next);
 						//select = first;
 
-						gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
+						gotoXY(X_NOTIFY, Y_NOTIFY-20);
 						SetColor(ColorCode_Red);
-						cout << "sinh vien ban tim kiem da hien thi" << id_student;
+						cout << "SINH VIEN BAN CAN TIM DA HIEN THI " << id_student;
 					}
 					else {
-						gotoXY(X_NOTIFY + 20, Y_NOTIFY - 10);
+						gotoXY(X_NOTIFY, Y_NOTIFY-20);
 						SetColor(ColorCode_Red);
 						cout << "Khong co sinh vien nay, bam F2 de them vao mot lp ";
 					}

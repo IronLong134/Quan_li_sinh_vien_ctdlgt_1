@@ -82,7 +82,7 @@ using namespace std;
 
 #define X_DISPLAY 4
 #define Y_DISPLAY 10
-#define QUANTITY_PER_PAGE 5
+#define QUANTITY_PER_PAGE 10
  
 
 int indexOutSubject = -1;

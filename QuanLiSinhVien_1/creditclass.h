@@ -6,14 +6,13 @@
 
 struct CreditClass {
 	unsigned int idClass = 0;
-	string idSubject; // ma mon hoc // key
-	string nameSubject;
+	string idSubject; // ma mon hoc // key	
 	int shoolYear; // nien khoa
 	int semester; // hoc ki
 	int group; // nhom
 	int studentMax;
 	int studentMin;
-
+	//nameSubject; //tìm kiếm
 	LIST_REGISTERSTUDENT listRegisterStudent;
 };
 typedef struct CreditClass CREDITCLASS;
@@ -22,9 +21,12 @@ typedef CREDITCLASS* PTR_CREDITCLASS;
 struct ListCreaditClass {
 
 	int n = 0;
-	PTR_CREDITCLASS listCreditClass[5000] = { NULL };
+	PTR_CREDITCLASS listCreditClass[MAXLISTSTUDENT] = { NULL };//5000
 };
 typedef struct ListCreaditClass LIST_CREDITCLASS;
+
+
+
 
 
 int totalPageCreditClass = 0;// tổng trang 
@@ -33,7 +35,7 @@ int currposPrecCreditClass = 0;//biến tính toán
 int currposCreditClass = 0;//  biến chạy trong 1 trang
 
 void InsertCreditClass(LIST_CREDITCLASS& l, CREDITCLASS data) {
-	if (l.n < 5000) {
+	if (l.n < MAXLISTSTUDENT) {
 		l.listCreditClass[l.n++] = new CREDITCLASS(data);
 	}
 }
@@ -132,7 +134,7 @@ bool DeleteCreditClassIsSuccess(LIST_CREDITCLASS& l, unsigned int id)
 	l.n--;
 	return true;
 }
-PTR_CREDITCLASS FindCrediClassWithCondition(LIST_CREDITCLASS l, string idSubject, int shoolYear, int semester, int group)
+PTR_CREDITCLASS FindCrediClassWithConditionReturn(LIST_CREDITCLASS l, string idSubject, int shoolYear, int semester, int group)
 {
 
 	for (int i = 0; i < l.n; i++)
@@ -144,6 +146,19 @@ PTR_CREDITCLASS FindCrediClassWithCondition(LIST_CREDITCLASS l, string idSubject
 		}
 	}
 	return NULL;
+}
+bool FindCrediClassWithCondition(LIST_CREDITCLASS l, string idSubject, int shoolYear, int semester, int group)
+{
+
+	for (int i = 0; i < l.n; i++)
+	{
+		if (l.listCreditClass[i]->idSubject == idSubject &&
+			l.listCreditClass[i]->shoolYear == shoolYear && l.listCreditClass[i]->semester == semester && l.listCreditClass[i]->group == group)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 bool FindCrediClassWithConditionRegister(LIST_CREDITCLASS l, int shoolYear, int semester)
 {
@@ -297,7 +312,7 @@ void InputCreditClass(LIST_CREDITCLASS& l, CREDITCLASS& cc, TREE_SUBJECT t, bool
 				cc.idSubject = idSubject;
 				NODE_SUBJECT* p = FindSubject(t, cc.idSubject);
 
-				cc.nameSubject = p->data.nameSubject;
+				//cc.nameSubject = p->data.nameSubject;
 				//cc->idClass = ++l.n;
 				cc.group = group;
 				cc.shoolYear = shoolYear;
@@ -353,6 +368,7 @@ void OutputCreditClass(PTR_CREDITCLASS cc, TREE_SUBJECT t, int ordinal) // ordin
 	gotoXY(xKeyDisplay[6] + 1, Y_DISPLAY + 3 + ordinal); cout << cc->studentMax;
 	gotoXY(xKeyDisplay[7] + 1, Y_DISPLAY + 3 + ordinal); cout << cc->studentMin;
 }
+
 
 void OutputListCreditClassPerPage(LIST_CREDITCLASS l, TREE_SUBJECT t, int indexBegin)
 {
@@ -467,6 +483,7 @@ void InputSearchCreditClass(LIST_CREDITCLASS list, int& year, int& semester, boo
 	int key = 0;
 	while (key != KEY_ESC)
 	{
+
 		switch (ordinal)
 		{
 		case 0:
@@ -486,11 +503,11 @@ void InputSearchCreditClass(LIST_CREDITCLASS list, int& year, int& semester, boo
 		}
 		else
 		{
-			if (ordinal == 1)
+			if (ordinal == 2)
 				isMoveUp = true;
 			ordinal++;
 		}
-		if (isSave)
+		if (key == KEY_ENTER)
 		{
 			gotoXY(X_NOTIFY + 10, Y_NOTIFY);
 			cout << setw(50) << setfill(' ') << " ";
@@ -512,7 +529,74 @@ void InputSearchCreditClass(LIST_CREDITCLASS list, int& year, int& semester, boo
 		else
 			isSave = false;
 	}
+
+
 }
+void InputSearchListRegister(LIST_CREDITCLASS list, string& id_subject, int& year, int& semester, int& group, bool& isSave, int& key) {
+	ShowCur(true);
+	// cac flag dieu khien qua trinh cap nhat
+	int ordinal = 0;
+	bool isMoveUp = false;
+	//int key = 0;
+	while (key != KEY_ESC)
+	{
+		//key = _getch();
+		switch (ordinal)
+		{
+		case 0:
+			CheckMoveAndValidateID(id_subject, isMoveUp, ordinal, isSave, 29, 10, key);
+			break;
+		case 1:
+			CheckMoveAndValidateNumber(year, isMoveUp, ordinal, isSave, 30, 3000, key);
+			break;
+		case 2:
+			CheckMoveAndValidateNumber(semester, isMoveUp, ordinal, isSave, 27, 4, key);
+			break;
+		case 3:
+			CheckMoveAndValidateNumber(group, isMoveUp, ordinal, isSave, 29, 4, key);
+			break;
+		}
+		if (key == KEY_ESC) {
+			isSave = false;
+			break;
+		}
+		if (isMoveUp)
+		{
+			if (ordinal == 0)
+				isMoveUp = false;
+			ordinal--;
+
+		}
+		else
+		{
+			if (ordinal == 4)
+				isMoveUp = true;
+			ordinal++;
+		}
+		if (isSave)
+		{
+			gotoXY(X_NOTIFY + 10, Y_NOTIFY);
+			cout << setw(50) << setfill(' ') << " ";
+
+			if (year == NULL || semester == NULL)
+			{
+				gotoXY(X_NOTIFY, Y_NOTIFY); cout << "Cac truong du lieu khong duoc de trong";
+			}
+			else if (FindCrediClassWithCondition(list, id_subject, year, semester, group) == false)
+			{
+				gotoXY(X_NOTIFY, Y_NOTIFY); cout << "Khong co lop tin chi nao thoa man dieu kien";
+			}
+			else {
+				isSave = true;
+				return;
+			}
+
+		}
+		else
+			isSave = false;
+	}
+}
+// CHOOESE CREDIT CLASS
 void AddToListTemp(LIST_CREDITCLASS& list_temp, PTR_CREDITCLASS credit_class) {
 	if (list_temp.n < 5000) {
 		list_temp.listCreditClass[list_temp.n++] = credit_class;
@@ -578,8 +662,13 @@ void OutputListChooseCreditClass(LIST_CREDITCLASS& l, TREE_SUBJECT t, int year, 
 					cout << "BAN DA DANG KI LOP TIN CHI NAY";
 
 				}
+				else if (listTemp.listCreditClass[select]->studentMax == listTemp.listCreditClass[select]->listRegisterStudent.n) {
+					gotoXY(X_NOTIFY, Y_NOTIFY);
+					cout << "LOP TIN CHI NAY DA DAY, BAN KHONG THE DANG KI";
+				}
 				else {
 					InsertOrderToListRegister(listTemp.listCreditClass[select]->listRegisterStudent, InitNodeRegisterStudent({ id_student , 0.0 }));
+					listTemp.listCreditClass[select]->listRegisterStudent.n++;
 					gotoXY(X_NOTIFY, Y_NOTIFY);
 					cout << "DANG KI THANH CONG";
 				}
@@ -602,7 +691,7 @@ void OutputListChooseCreditClass(LIST_CREDITCLASS& l, TREE_SUBJECT t, int year, 
 
 	}
 }
-void managerChooseCreditClass(LIST_CREDITCLASS& l, ListStudent list_student, TREE_SUBJECT t) {
+void managerRegisterCreditClass(LIST_CREDITCLASS& l, ListStudent list_student, TREE_SUBJECT t) {
 	clrscr();
 	int key = 0;
 	bool isSave = false;
@@ -610,7 +699,7 @@ void managerChooseCreditClass(LIST_CREDITCLASS& l, ListStudent list_student, TRE
 	//key = _getch();
 	while (key != KEY_ESC) {
 
-		
+
 		SetColor(ColorCode_Blue);
 		gotoXY(getXScreen() / 2 - 30, 10);
 
@@ -659,6 +748,169 @@ void managerChooseCreditClass(LIST_CREDITCLASS& l, ListStudent list_student, TRE
 		if (key == KEY_ESC) {
 			clrscr();
 			break;
+		}
+
+	}
+}
+
+// OUTPUT LIST REGISTER
+
+
+
+REGISTER_STUDENT* ListRegister[100];
+int nRegister = 0;
+
+
+void InsertCreditClassToTemp(REGISTER_STUDENT data) {
+	if (nRegister < 100) {
+		ListRegister[nRegister++] = new REGISTER_STUDENT(data);
+	}
+}
+
+
+void OutputListRegister(LIST_REGISTERSTUDENT& list_register,ListStudent list_student,int select) {	
+		NODE_REGISTERSTUDENT* run = new NODE_REGISTERSTUDENT();
+		/*	for (run = cc->listRegisterStudent.pHead; run != NULL; run = run->pNext) {
+				InsertCreditClassToTemp(listTemp, run->_registerStudent);
+			}*/
+			//int i = 0;
+		int ordinal = 0;
+
+		//for (int i = 0; i < listTemp.nRegister; i++) {
+		//
+		//	REGISTER_STUDENT* c = listTemp.ListRegister[i];
+		//	//them gotoXY
+		//	//gotoXY(X_DISPLAY, Y_DISPLAY + i);
+		//	//cout << c.idClass << " - " << c.nameSubject;
+		//	DeleteOldData(sizeof(keyDisplayCreditClass) / sizeof(string), ordinal);
+		//	gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 3 + ordinal); cout << c->idStudent;
+		//	NodeStudent* a = FindStudent(list_student, c->idStudent);
+		//	gotoXY(xKeyDisplay[1] + 1, Y_DISPLAY + 3 + ordinal); cout << a->data.firstName << " " << a->data.lastName;
+		//	gotoXY(xKeyDisplay[2] + 1, Y_DISPLAY + 3 + ordinal);
+		//	if (c->point== -1) {
+		//		cout << "Chua nhap diem";
+		//	}
+		//	else {
+		//		cout << c->point;
+		//	}
+		//	ordinal++;
+
+		//}
+
+		for (run = list_register.pHead; run != NULL; run = run->pNext) {
+
+			if (ordinal == select) {
+				//chỉnh màu
+				SetBGColor(ColorCode_Blue);
+				SetColor(ColorCode_White);
+			}
+			else {
+				SetColor(ColorCode_Blue);
+				SetBGColor(ColorCode_White);
+				//chỉnh màu
+			}
+			/*	gotoXY(X_DISPLAY, Y_DISPLAY + i);
+				cout << run->_registerStudent.idStudent << "    " << run->_registerStudent.point;
+				i++;*/
+			DeleteOldData(sizeof(keyDisplayCreditClass) / sizeof(string), ordinal);
+			gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 3 + ordinal); cout << run->_registerStudent.idStudent;
+			NodeStudent* a = FindStudent(list_student, run->_registerStudent.idStudent);
+			gotoXY(xKeyDisplay[1] + 1, Y_DISPLAY + 3 + ordinal); cout << a->data.firstName << " " << a->data.lastName;
+			gotoXY(xKeyDisplay[2] + 1, Y_DISPLAY + 3 + ordinal);
+			if (run->_registerStudent.point == -1) {
+				cout << "Chua nhap diem";
+			}
+			else {
+				cout << run->_registerStudent.point;
+			}
+			ordinal++;
+		}
+
+}
+void ControlChooseAddScore(LIST_CREDITCLASS& list, TREE_SUBJECT t, ListStudent list_student, string id_student, int year, int semester, int group, int select) {
+	PTR_CREDITCLASS cc = FindCrediClassWithConditionReturn(list, id_student, year, semester, group);
+	int key = 0;
+	if (cc != NULL) {
+		while (key != KEY_ESC) {
+			OutputListRegister(cc->listRegisterStudent, list_student,select);
+			key = _getch();
+			//if (key == KEY_CONTROL) {
+			//	key = getch();
+			//	if (key == KEY_UP) {
+			//		if (select != 0) {
+			//			select--;
+			//		}
+			//	}
+			//	else if (key == KEY_DOWN) {
+			//		if (select != listTemp.n - 1) {
+			//			select++;
+			//		}
+			//	}
+			////}
+			//if (key == KEY_ENTER) {
+			//	if (CheckRegisterIsExist(listTemp.listCreditClass[select], id_student) == true) {
+			//		gotoXY(X_NOTIFY, Y_NOTIFY);
+			//		cout << "BAN DA DANG KI LOP TIN CHI NAY";
+
+			//	}
+			//	else if (listTemp.listCreditClass[select]->studentMax == listTemp.listCreditClass[select]->listRegisterStudent.n) {
+			//		gotoXY(X_NOTIFY, Y_NOTIFY);
+			//		cout << "LOP TIN CHI NAY DA DAY, BAN KHONG THE DANG KI";
+			//	}
+			//	else {
+			//		InsertOrderToListRegister(listTemp.listCreditClass[select]->listRegisterStudent, InitNodeRegisterStudent({ id_student , 0.0 }));
+			//		listTemp.listCreditClass[select]->listRegisterStudent.n++;
+			//		gotoXY(X_NOTIFY, Y_NOTIFY);
+			//		cout << "DANG KI THANH CONG";
+			//	}
+
+			//	//while (_getch() != KEY_ESC)break;
+			//	//clrscr();
+			//}
+			if (key == KEY_ESC) {
+				clrscr();
+				return;
+			}
+			/*	else if (key == KEY_ENTER) {
+					if (CheckRegisterIsExist(listTemp.listCreditClass[select], id_student) == true) {
+						gotoXY(X_NOTIFY, Y_NOTIFY);
+
+					}
+					InsertOrderToListRegister(listTemp.listCreditClass[select]->listRegisterStudent, InitNodeRegisterStudent({ id_student , 0.0 }));
+				}*/
+		}
+	}
+	else {
+		return;
+	}
+}
+void managerAddScore(LIST_CREDITCLASS& list, TREE_SUBJECT t, ListStudent list_student) {
+	clrscr();
+	int key = 0;
+	bool isSave = false;
+	Logo();
+	Display(keyAddScore, 3);
+	int select = 0;
+	while (key != KEY_ESC) {
+		//key = _getch();
+		gotoXY(X_ADD + 2, Y_ADD - 3);
+		cout << "NHAP DIEU KIEN DE DANG KI , BAM F10 DE TIM" << endl;
+		string id_subject = "";
+		int year = 0, semester = 0, group = 0;
+		DisplayEdit(keySearchOnlyCredit, 4, 40);
+
+		if (key == KEY_ESC) {
+			clrscr();
+			isSave = false;
+			return;
+			break;
+		}
+		else {
+			InputSearchListRegister(list, id_subject, year, semester, group, isSave, key);
+			if (isSave == true) {
+				ControlChooseAddScore(list, t, list_student, id_subject, year, semester, group, select);
+			}
+
 		}
 
 	}
@@ -736,7 +988,7 @@ backMenu:
 				{
 
 					int k = ChooseCreditClass(l, t);
-					if (k == -1) goto backMenu;
+					if (k == -1) goto backMenu;//esc
 
 					key = _getch();
 
@@ -798,14 +1050,13 @@ backMenu:
 }
 
 //đọc ghi file 
-
 void ReadCreditClass(LIST_CREDITCLASS& list_credit_class, ifstream& f)
 {
 	string line;
-	CreditClass credit_class;
 	int n;
 	string temp;
 	while (!f.eof()) {
+		CreditClass credit_class;
 		getline(f, line);
 		if (line != "") {
 			n = 0;
@@ -815,24 +1066,21 @@ void ReadCreditClass(LIST_CREDITCLASS& list_credit_class, ifstream& f)
 			}
 			n++;
 			credit_class.idClass = atoi(temp.c_str());
+
 			temp = "";
 			for (int i = 0; line[n] != ','; i++, n++) {
 				temp.push_back(line[n]);
 			}
 			n++;
 			credit_class.idSubject = temp;
-			temp = "";
-			for (int i = 0; line[n] != ','; i++, n++) {
-				temp.push_back(line[n]);
-			}
-			n++;
-			credit_class.nameSubject = temp;
+
 			temp = "";
 			for (int i = 0; line[n] != ','; i++, n++) {
 				temp.push_back(line[n]);
 			}
 			n++;
 			credit_class.shoolYear = atoi(temp.c_str());
+
 			temp = "";
 			for (int i = 0; line[n] != ','; i++, n++) {
 				temp.push_back(line[n]);
@@ -852,11 +1100,28 @@ void ReadCreditClass(LIST_CREDITCLASS& list_credit_class, ifstream& f)
 			n++;
 			credit_class.studentMax = atoi(temp.c_str());
 			temp = "";
-			for (int i = 0; n < line.size(); i++, n++) {
+			for (int i = 0; line[n] != ','; i++, n++) {
 				temp.push_back(line[n]);
 			}
 			n++;
 			credit_class.studentMin = atoi(temp.c_str());
+			while (line.size() > n) {
+				temp = "";
+				REGISTER_STUDENT data;
+				for (int i = 0; line[n] != ','; i++, n++) {
+					temp.push_back(line[n]);
+				}
+				n++;
+				data.idStudent = temp;
+				temp = "";
+				for (int i = 0; line[n] != ','; i++, n++) {
+					temp.push_back(line[n]);
+				}
+				n++;
+				data.point = atof(temp.c_str());
+				temp = "";
+				InsertOrderToListRegister(credit_class.listRegisterStudent, InitNodeRegisterStudent(data));
+			}
 			InsertCreditClass(list_credit_class, credit_class);
 		}
 		else {
@@ -868,12 +1133,7 @@ void ReadFileCreditClass(LIST_CREDITCLASS& list)
 {
 	ifstream f("creditclass.txt");
 	if (f.is_open()) {
-		/*	if (!f.peek() == EOF) {
-				getline(f, pass);
-				docCay(t, f);
-				ReadStudent(ds, f);
-				f.close();
-			}*/
+
 		ReadCreditClass(list, f);
 		f.close();
 	}
@@ -895,7 +1155,6 @@ void WriteFileCreditClass(ListCreaditClass list)
 		for (int i = 0; i < list.n; i++) {
 			f << list.listCreditClass[i]->idClass << "," <<
 				list.listCreditClass[i]->idSubject << "," <<
-				list.listCreditClass[i]->nameSubject << "," <<
 				list.listCreditClass[i]->shoolYear << "," <<
 				list.listCreditClass[i]->semester << "," <<
 				list.listCreditClass[i]->group << "," <<

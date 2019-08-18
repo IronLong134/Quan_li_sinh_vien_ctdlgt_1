@@ -219,6 +219,7 @@ NODE_REGISTERSTUDENT* BinarySearchRegisterStudent(LIST_REGISTERSTUDENT l, string
 	} while (start != last);
 	return NULL; // value not present;
 }
+
 //int InputRegister(ListStudent l,LIST_REGISTERSTUDENT& list, REGISTER_STUDENT student , bool isEdited = false) {
 //	ShowCur(true);
 //

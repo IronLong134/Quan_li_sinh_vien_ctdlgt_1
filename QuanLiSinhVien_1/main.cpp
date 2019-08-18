@@ -3,7 +3,7 @@
 #include "student.h"
 #include"creditclass.h"
 
-string Menu[5] = { "Hieu chinh mon hoc","Hieu chinh sinh vien","Hieu chinh lop tin chi","Dang ki mon hoc cho sv","Thoat" };
+string Menu[7] = { "Hieu chinh mon hoc","Hieu chinh sinh vien","Hieu chinh lop tin chi","Dang ki mon hoc cho sv","Danh Sach Dang ki","In Danh Sach","Thoat" };
 
 void menuMain() {
 
@@ -54,14 +54,14 @@ void main() {
 
 		logoName();
 		Xu_Li_Con_Tro_Chi_Vi(0);
-		loadMenu(Menu, select, 5, (getXScreen() - 40) / 2, 20, ColorCode_White, ColorCode_Blue);
+		loadMenu(Menu, select, 7, (getXScreen() - 40) / 2, 20, ColorCode_White, ColorCode_Blue);
 
 		//hienThiMenu(thongTinMenuMonHoc, 0, 2, 4, 25, ColorCode_White, ColorCode_Cyan);
 		//hienThiThongTinMonHoc(mhtt, 0, 0, ColorCode_Cyan);
 		key = _getch();
-		changeSelectMenu(select, 5, key);
+		changeSelectMenu(select, 7, key);
 		if (key == KEY_ENTER) {
-			if (select == 4) {
+			if (select == 5) {
 				break;
 			}
 			else if (select == 0) {
@@ -99,11 +99,19 @@ void main() {
 				clrscr();
 				SetColor(ColorCode_Blue);
 				SetBGColor(ColorCode_White);
-				managerChooseCreditClass(list_credit_class,ds,t);
+				managerRegisterCreditClass(list_credit_class,ds,t);
 				//OutputListChooseCreditClass(list_credit_class, t,1 ,1, "N14DCCN300" );
+			}
+			else if (select == 4) {
+				clrscr();
+				SetColor(ColorCode_Blue);
+				SetBGColor(ColorCode_White);
+
+				managerAddScore(list_credit_class,t,ds);
+				clrscr();
 			}
 		}
 	}
-	//WriteFileCreditClass(list_credit_class);
+	WriteFileCreditClass(list_credit_class);
 	return;
 }

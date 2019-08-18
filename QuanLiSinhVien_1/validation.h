@@ -404,62 +404,63 @@ void CheckMoveAndValidateNumber(int& result, bool& isMove, int& ordinal, bool& i
 	int count = lengh;
 	while (key !=KEY_ESC)
 	{
-		while (_kbhit())
+		key = _getch();
+		if (key != KEY_CONTROL && key != SPACE && key != 0)
+		{
+			if (key >= 48 && key <= 57)
+			{
+				int f = key - 48;
+				if (count == 0 && key == 48)
+					continue;
+				else
+					if (result * 10 + (f) <= condition)
+					{
+						cout << f;
+						result = result * 10 + (f);
+						count++;
+					}
+			}
+			else if (key == KEY_ENTER)
+			{
+				if (result > condition)
+					continue;
+				return;
+
+			}
+			else if (key == KEY_BACKSPACE && count > 0)
+			{
+				cout << "\b" << " " << "\b";
+				count--;
+				result /= 10;
+			}
+		}
+		else if (key == 224)
 		{
 			key = _getch();
-			if (key != KEY_CONTROL && key != SPACE && key != 0)
+			if (key == KEY_UP)
 			{
-				if (key >= 48 && key <= 57)
-				{
-					int f = key - 48;
-					if (count == 0 && key == 48)
-						continue;
-					else
-						if (result * 10 + (f) <= condition)
-						{
-							cout << f;
-							result = result * 10 + (f);
-							count++;
-						}
-				}
-				else if (key == KEY_ENTER)
-				{
-					if (result > condition)
-						continue;
-					return;
-
-				}
-				else if (key == KEY_BACKSPACE && count > 0)
-				{
-					cout << "\b" << " " << "\b";
-					count--;
-					result /= 10;
-				}
+				isMove = true;
+				return;
 			}
-			else if (key == 224)
+			else
 			{
-				key = _getch();
-				if (key == KEY_UP)
-				{
-					isMove = true;
-					return;
-				}
-				else
-				{
-					isMove = false;
-					return;
-				}
+				isMove = false;
+				return;
 			}
-			else if (key == 0)
+		}
+		else if (key == 0)
+		{
+			key = _getch();
+			if (key == KEY_F10)
 			{
-				key = _getch();
-				if (key == KEY_F10)
-				{
-					isSave = true;
-					return;
-				}
+				isSave = true;
+				return;
 			}
-		}//kbhit
+		}
+		if (key == KEY_ESC) {
+			isSave = false;
+			break;
+		}
 	}//while tru
 
 }
