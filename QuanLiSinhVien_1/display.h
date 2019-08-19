@@ -11,9 +11,10 @@ string keyInputIdStudent[1] = { "ma sv:" };
 string keySearchCredit[2] = { "Nien khoa:","Hoc ki:" };
 string keySearchOnlyCredit[4] = { "Mon Hoc:","Nien khoa:","Hoc ki:","Nhom:" };
 string keyAddScore[3] = { "Ma SV:","Ten SV","Diem:" };
+string keyAverageScore[5] = { "STT:","Ma Sv:","Ho","Ten:","Diem TB:" };
 int xKeyDisplay[9] = { 5,25,65,85,100, 110, 120, 140, 150 };//20 40 70 80 90 120 150 
 
-void logoName()
+void logoName(string *&title)
 {
 	/*
 	.___                       .____
@@ -23,22 +24,25 @@ void logoName()
 |___||__|   \____/|___|  / |_______ \____/|___|  /\___  /
 					   \/          \/          \//_____/
 	*/
-	int batDau = (getXScreen() - 55) / 2;
+	
+	title[0] = ".___                       .____                       ";
+	title[1] = "|   |______  ____   ____   |    |    ____   ____    ____  ";
+	title[2] = "|   \\_  __ \\/  _ \\ /    \\  |    |   /  _ \\ /    \\  / ___\\";
+	title[3] = "|   ||  | \\(  <_> )   |  \\ |    |__(  <_> )   |  \\/ /_/  >";
+	title[4] = "|___||__|   \\____/|___|  / |_______ \\____/|___|  /\\___  / ";
+	title[5] = "                       \\/          \\/          \\//_____/   ";
+}
+
+void drawLogo(int y, string* title) {
 	SetColor(ColorCode_Blue);
 	SetBGColor(ColorCode_White);
-	gotoXY(batDau, 3);
-	cout << ".___                       .____                       ";
-	gotoXY(batDau, 4);
-	cout << "|   |______  ____   ____   |    |    ____   ____    ____  ";
-	gotoXY(batDau, 5);
-	cout << "|   \\_  __ \\/  _ \\ /    \\  |    |   /  _ \\ /    \\  / ___\\";
-	gotoXY(batDau, 6);
-	cout << "|   ||  | \\(  <_> )   |  \\ |    |__(  <_> )   |  \\/ /_/  >";
-	gotoXY(batDau, 7);
-	cout << "|___||__|   \\____/|___|  / |_______ \\____/|___|  /\\___  / ";
-	gotoXY(batDau, 8);
-	cout << "                       \\/          \\/          \\//_____/   ";
+	int batDau = (getXScreen() - 55) / 2;
+	for (int i = 0; i < 6; i++) {
+		gotoXY(batDau, y+ i);
+		cout << title[i];
+	}
 }
+
 void Logo() {
 	int Start = (getXScreen() - 65) / 2;
 	
@@ -201,7 +205,7 @@ void Display(string key[], int nKey)
 	}
 	// SHOW note
 	gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 40);
-	cout << setw(xKeyDisplay[nKey] - xKeyDisplay[0] - 1) << "F2: them F3: Xoa F4: Hieu Chinh F10: Save" << setfill(' ');
+	cout << setw(xKeyDisplay[nKey] - xKeyDisplay[0] - 1) << "bang huong dan hieu chinh mon hoc va lop tin chi F2: them F3: Xoa F4: Hieu Chinh F10: Save" << setfill(' ');
 }
 void DeleteOldData(int nKey, int locate)
 {
@@ -226,11 +230,12 @@ void TutorialStudent() {
 	gotoXY(X_ADD, Y_ADD + 30); cout << "F1:tim kiem lop";
 	gotoXY(X_ADD, Y_ADD + 30+2); cout << "F2:Them sinh vien vao lop hien tai";
 	gotoXY(X_ADD, Y_ADD + 30+4); cout << "F3:Them lop moi";
-	gotoXY(X_ADD, Y_ADD + 30+6); cout << "F4:Xoa sinh vien trong lop do(khong the xoa het ds)";
-	gotoXY(X_ADD, Y_ADD + 30 + 8); cout << "F5:Xoa mot lop, tat ca sinh vien trong lp se mat ";
-	gotoXY(X_ADD, Y_ADD + 30 + 10); cout << "F7:TIM KIEM SINH VIEN THEO MA";
-	gotoXY(X_ADD, Y_ADD + 30 + 12); cout << "F10: Luu them va sua ";
-	gotoXY(X_ADD, Y_ADD + 30 + 14); cout << "ESC: Huy bo thao tac ";
+	gotoXY(X_ADD, Y_ADD + 30+6); cout << "F4:Sua thong tin sinh vien trong lop do";
+	gotoXY(X_ADD, Y_ADD + 30 + 8); cout << "F5:Xoa mot sinh vien trong lp (luu y: khong duoc xoa het) ";
+	gotoXY(X_ADD, Y_ADD + 30 + 10); cout << "F6:Xoa mot lop, tat ca sinh vien trong lp se mat ";
+	gotoXY(X_ADD, Y_ADD + 30 + 12); cout << "F7:TIM KIEM SINH VIEN THEO MA";
+	gotoXY(X_ADD, Y_ADD + 30 + 14); cout << "F10: Luu them va sua ";
+	gotoXY(X_ADD, Y_ADD + 30 + 16); cout << "ESC: Huy bo thao tac ";
 }
 void DeleteMenuAdd()
 {

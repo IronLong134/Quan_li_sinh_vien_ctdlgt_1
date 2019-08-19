@@ -198,7 +198,8 @@ void CheckMoveAndValidateIdStudent(string& id_student, bool& isSave, int& key) {
 		}//kbhit
 	} 
 }
-void CheckMoveAndValdateIdClass(string& result,bool& isSave,int& key)
+
+void CheckMoveAndValidateIdClass(string& result,bool& isSave,int& key)
 {
 	int lengh = result.length();
 	//gotoXY(X_ADD + distance, Y_ADD);
@@ -206,43 +207,39 @@ void CheckMoveAndValdateIdClass(string& result,bool& isSave,int& key)
 	int count = lengh;
 	while (key!=KEY_ESC)
 	{
-		while (_kbhit())
+		key = _getch();
+		if (key != 224 && key != SPACE && key != 0)
 		{
-			key = _getch();
-			if (key != 224 && key!=SPACE && key != 0)
+			if ((key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key >= 48 && key <= 57))
 			{
-				if ((key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key >= 48 && key <= 57))
+				if (count < 15)
 				{
-					if (count < 15)
-					{
-						count++;
-						char key1 = (char)key;
-						//cout << Lower(key1);
-						char keyLower = Lower(key1);
-						cout << keyLower;
-						result += keyLower;
-					}
+					count++;
+					char key1 = (char)key;
+					//cout << Lower(key1);
+					char keyLower = Lower(key1);
+					cout << keyLower;
+					result += keyLower;
+				}
 
-				}if (key == KEY_ESC) {
-					isSave = false;
-					break;
-				}
-				else if (key == KEY_ENTER) {
-					isSave=true;
-					return;
-				}
-				   
-				else if (key == KEY_BACKSPACE && count > 0)
-				{
-					cout << "\b" << " " << "\b";
-					result.erase(result.length() - 1, 1);
-					
-					count--;
-
-				}
+			}if (key == KEY_ESC) {
+				isSave = false;
+				break;
+			}
+			else if (key == KEY_ENTER) {
+				isSave = true;
+				return;
 			}
 
-		}//kbhit
+			else if (key == KEY_BACKSPACE && count > 0)
+			{
+				cout << "\b \b";
+				result.erase(result.length() - 1, 1);
+
+				count--;
+
+			}
+		}
 	}//while true
 }
 
@@ -256,66 +253,63 @@ void CheckMoveAndValidateName(string& result, bool& isMove, int& ordinal, bool& 
 	bool isSpaced = false;
 	while (true)
 	{
-		while (_kbhit())
+		int key = _getch();
+		if (key != 224 && key != 0)
 		{
-			int key = _getch();
-			if (key != 224 && key != 0)
+			if ((key >= 65 && key <= 90) || (key >= 97 && key <= 122) || key == SPACE)
 			{
-				if ((key >= 65 && key <= 90) || (key >= 97 && key <= 122) || key == SPACE)
+				if (count < condition)
 				{
-					if (count < condition)
+					count++;
+					if (!isSpaced && key == SPACE)
 					{
-						count++;
-						if (!isSpaced && key == SPACE)
-						{
-							cout << (char)key;
-							result += (char)key;
-							isSpaced = true;
-						}
-						else
-						{
-							
-							char key1 = (char)key;
-							//cout << Lower(key1);
-							cout << Lower(key1);
-							result += (char)key;
-							isSpaced = false;
-						}
+						cout << (char)key;
+						result += (char)key;
+						isSpaced = true;
+					}
+					else
+					{
+
+						char key1 = (char)key;
+						//cout << Lower(key1);
+						cout << Lower(key1);
+						result += (char)key;
+						isSpaced = false;
 					}
 				}
-				else if (key == KEY_ENTER)
-					return;
-				else if (key == KEY_BACKSPACE && count > 0)
-				{
-					cout << "\b" << " " << "\b";
-					result.erase(result.length() - 1, 1);
-					count--;
-				}
 			}
-			else if (key == 224)
+			else if (key == KEY_ENTER)
+				return;
+			else if (key == KEY_BACKSPACE && count > 0)
 			{
-				key = _getch();
-				if (key == KEY_UP)
-				{
-					isMove = true;
-					return;
-				}
-				else
-				{
-					isMove = false;
-					return;
-				}
+				cout << "\b" << " " << "\b";
+				result.erase(result.length() - 1, 1);
+				count--;
 			}
-			else if (key == 0)
+		}
+		else if (key == 224)
+		{
+			key = _getch();
+			if (key == KEY_UP)
 			{
-				key = _getch();
-				if (key == KEY_F10)
-				{
-					isSave = true;
-					return;
-				}
+				isMove = true;
+				return;
 			}
-		}//kbhit
+			else
+			{
+				isMove = false;
+				return;
+			}
+		}
+		else if (key == 0)
+		{
+			key = _getch();
+			if (key == KEY_F10)
+			{
+				isSave = true;
+				return;
+			}
+		}
 	}//true
 }
 

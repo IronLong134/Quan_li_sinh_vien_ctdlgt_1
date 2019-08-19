@@ -383,14 +383,7 @@ DisplayStudent* endList(DisplayStudent* first) {
 	}
 	return run;
 }
-void OutputOneStudent(NodeStudent student, int locate) // vi tri == locate
-{
-	//DeleteOldData(sizeof(keyDisplaySubject) / sizeof(string), locate);
-	//gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 3 + locate); cout << student.data.idStudent;
-	//gotoXY(xKeyDisplay[1] + 1, Y_DISPLAY + 3 + locate); cout << student.data.;
-	//gotoXY(xKeyDisplay[2] + 1, Y_DISPLAY + 3 + locate); cout << student.numberTheory;
-	//gotoXY(xKeyDisplay[3] + 1, Y_DISPLAY + 3 + locate); cout << student.numberPratice;
-}
+
 void displayStudentList(DisplayStudent* first, DisplayStudent* last, DisplayStudent* select) {
 	SetBGColor(ColorCode_White);
 	SetColor(ColorCode_Black);
@@ -557,7 +550,8 @@ void InputSearchClass(string& id_class, bool& isSave) {
 	//bool isSave = false;
 	while (key != KEY_ESC)
 	{
-		CheckMoveAndValdateIdClass(id_class, isSave, key);
+		CheckMoveAndValidateIdClass(id_class, isSave, key);
+		
 		if (key == KEY_ESC) {
 			DeleteMenuAdd();
 			isSave = false;
@@ -577,7 +571,7 @@ void InputClass(STUDENT& st, bool& isSave) {
 	string id_class;
 	isSave = false;
 	while (key != KEY_ESC) {
-		CheckMoveAndValdateIdClass(id_class, isSave, key);
+		CheckMoveAndValidateIdClass(id_class, isSave, key);
 		if (key == KEY_ESC) {
 			DeleteMenuAdd();
 			isSave = false;
@@ -594,6 +588,7 @@ void InputClass(STUDENT& st, bool& isSave) {
 	}
 	ShowCur(false);
 }
+
 int InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
 {
 	ShowCur(true);
@@ -861,7 +856,7 @@ void mainStudent(ListStudent& ds) {
 				bool isSave = false;
 
 				//string id_class;
-				gotoXY(159, 11);
+				gotoXY(161, 11);
 				InputClass(st, isSave);
 				if (isSave == true) {
 					DisplayEdit(keyDisplayStudent, sizeof(keyDisplayStudent) / sizeof(string), 35);
@@ -905,6 +900,8 @@ void mainStudent(ListStudent& ds) {
 					DeleteStudent(ds, select->data->idStudent); // xoá 
 					clearAllStudentDisplay(l);
 					insertListStudent(l, ds); // restore dữ liệu
+					clrscr();
+					TutorialStudent();
 					for (first = l.first; first != NULL && first->data->idClass != idClass; first = first->next);// chạy lại lp đó
 					select = first;
 					last = endList(first);

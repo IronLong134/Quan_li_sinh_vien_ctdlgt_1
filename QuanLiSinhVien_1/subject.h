@@ -231,7 +231,7 @@ void ChangePageSubject(TREE_SUBJECT t)
 {
 	currposSubject = (pageNowSubject - 1) * QUANTITY_PER_PAGE; // lấy vị trí đầu tiên trong 1 trang //curpos: lưu thay ms thay đổi,
 	currposPrecSubject = (pageNowSubject - 1) * QUANTITY_PER_PAGE; // thay đổi chính key up key down
-
+	//xíu sẽ thay đổi 
 	clrscr();
 	Display(keyDisplaySubject, sizeof(keyDisplaySubject) / sizeof(string));
 	DeleteNote(sizeof(keyDisplaySubject) / sizeof(string));
@@ -250,7 +250,7 @@ NODE_SUBJECT* ChooseSubject(TREE_SUBJECT& t)
 	Display(keyDisplaySubject, sizeof(keyDisplaySubject) / sizeof(string)); // vẽ khung làm việc
 
 	pageNowSubject = 1;   // page ban đầu 
-	currposSubject = (pageNowSubject - 1) * QUANTITY_PER_PAGE;// trong 1 trag 
+	currposSubject = (pageNowSubject - 1) * QUANTITY_PER_PAGE;//  trong 1 trag
 	currposPrecSubject = (pageNowSubject - 1) * QUANTITY_PER_PAGE;// làm việc thay đổi trang 
 
 	NODE_SUBJECT* newSubject = FindSubject(t, listSubjectName[0].idSubject);
