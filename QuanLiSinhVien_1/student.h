@@ -698,8 +698,8 @@ int InputStudent(ListStudent& l, STUDENT& st, bool isEdited = false)
 				st.gender = sex;
 
 				st.yearJoin = yearJoin;
-				StandarString(st.firstName);
-				StandarString(st.lastName);
+				//StandarString(st.firstName);
+				//StandarString(st.lastName);
 
 				if (isEdited)
 				{

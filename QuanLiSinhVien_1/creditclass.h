@@ -6,10 +6,10 @@
 
 struct CreditClass {
 	unsigned int idClass = 0;
-	string idSubject; // ma mon hoc // key	
-	int shoolYear; // nien khoa
-	int semester; // hoc ki
-	int group; // nhom
+	string idSubject;
+	int shoolYear;
+	int semester;
+	int group;
 	int studentMax;
 	int studentMin;
 	//nameSubject; //tìm kiếm
@@ -178,6 +178,31 @@ bool CheckRegisterIsExist(PTR_CREDITCLASS cc, string id_student) {
 	}
 	return false;
 }
+NODE_REGISTERSTUDENT* SearchNodeRegister(PTR_CREDITCLASS cc, string id_student) {
+	LIST_REGISTERSTUDENT list_register = cc->listRegisterStudent;
+
+	if (list_register.pHead == NULL) return NULL;
+	for (NODE_REGISTERSTUDENT* p = list_register.pHead; p != NULL; p = p->pNext)
+	{
+		if (p->_registerStudent.idStudent == id_student) {
+			return p;
+		}
+
+	}
+	return NULL;
+}
+bool CheckRegisterSubjectIsExist(LIST_CREDITCLASS list_credit, int index, string id_subject, string id_student) {
+	for (int i = 0; i < list_credit.n; i++) {
+		if (i != index) {
+			for (NODE_REGISTERSTUDENT* run = list_credit.listCreditClass[i]->listRegisterStudent.pHead; run != NULL; run = run->pNext) {
+				if (run->_registerStudent.idStudent == id_student) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
 void InputCreditClass(LIST_CREDITCLASS& l, CREDITCLASS& cc, TREE_SUBJECT t, bool isEdited = false) // nhap  Lop TC
 {
 	ShowCur(true);
@@ -303,6 +328,7 @@ void InputCreditClass(LIST_CREDITCLASS& l, CREDITCLASS& cc, TREE_SUBJECT t, bool
 			}
 			else
 			{
+				//StandarString(idSubject);
 				cc.idSubject = idSubject;
 				NODE_SUBJECT* p = FindSubject(t, cc.idSubject);
 
@@ -324,6 +350,7 @@ void InputCreditClass(LIST_CREDITCLASS& l, CREDITCLASS& cc, TREE_SUBJECT t, bool
 				{
 					if (l.n != 0)
 						cc.idClass = l.listCreditClass[l.n - 1]->idClass + 1;
+					
 					//InitListRegisterStudent(cc->listRegisterStudent);
 					//l.listCreditClass[l.n] = new CREDITCLASS;
 					//l.listCreditClass[l.n] = cc;
@@ -435,13 +462,13 @@ void InputSearchListRegister(LIST_CREDITCLASS list, string& id_subject, int& yea
 		switch (ordinal)
 		{
 		case 0:
-			CheckMoveAndValidateID(id_subject, isMoveUp, ordinal, isSave, 29, 10, key);
+			CheckMoveAndValidateID(id_subject, isMoveUp, ordinal, isSave, 30, 10, key);
 			break;
 		case 1:
-			CheckMoveAndValidateNumber(year, isMoveUp, ordinal, isSave, 30, 3000, key);
+			CheckMoveAndValidateNumber(year, isMoveUp, ordinal, isSave, 33, 3000, key);
 			break;
 		case 2:
-			CheckMoveAndValidateNumber(semester, isMoveUp, ordinal, isSave, 27, 4, key);
+			CheckMoveAndValidateNumber(semester, isMoveUp, ordinal, isSave, 29, 4, key);
 			break;
 		case 3:
 			CheckMoveAndValidateNumber(group, isMoveUp, ordinal, isSave, 29, 4, key);
@@ -557,6 +584,10 @@ void OutputListChooseCreditClass(LIST_CREDITCLASS& l, TREE_SUBJECT t, int year, 
 					gotoXY(X_NOTIFY, Y_NOTIFY);
 					cout << "LOP TIN CHI NAY DA DAY, BAN KHONG THE DANG KI";
 				}
+				/*	else if (CheckRegisterSubjectIsExist(l, select, listTemp.listCreditClass[select]->idSubject, id_student)) {
+						gotoXY(X_NOTIFY, Y_NOTIFY);
+						cout << "BAN DA DANG KI MON NAY , KHONG DUOC TRUNG MON";
+					}*/
 				else {
 					InsertOrderToListRegister(listTemp.listCreditClass[select]->listRegisterStudent, InitNodeRegisterStudent({ id_student , 0.0 }));
 					listTemp.listCreditClass[select]->listRegisterStudent.n++;
@@ -633,11 +664,9 @@ void managerRegisterCreditClass(LIST_CREDITCLASS& l, ListStudent list_student, T
 			}
 		}
 		else {
-			clrscr();
 			break;
 		}
 		if (key == KEY_ESC) {
-			clrscr();
 			break;
 		}
 
@@ -794,7 +823,7 @@ void ControlChooseAddScore(LIST_CREDITCLASS& list, TREE_SUBJECT t, ListStudent l
 	insertListRegisterTemp(l, cc->listRegisterStudent);
 	if (l.first != NULL) {
 		int line;
-		
+
 		DisplayNodeRegister* select = l.first;
 		while (key != KEY_ESC) {
 			//OutputListRegister(cc->listRegisterStudent, list_student, select);
@@ -825,10 +854,10 @@ void ControlChooseAddScore(LIST_CREDITCLASS& list, TREE_SUBJECT t, ListStudent l
 	}
 	else {
 		SetColor(ColorCode_Red);
-		while (key != KEY_ESC){
+		while (key != KEY_ESC) {
 			gotoXY(X_NOTIFY, Y_NOTIFY); cout << "KHONG CO SINH VIEN NAO DK ";
 			key = getch();
-		
+
 		}
 	}
 
@@ -955,67 +984,166 @@ void OutputAverageScore(LIST_CREDITCLASS list, ListStudent list_student) {
 	clrscr();
 	int key = 0;
 	bool isSave = false;
-
+	int isSearch = false;
 	//key = _getch();
-	while (key != KEY_ESC) {
+	SetColor(ColorCode_Blue);
+	gotoXY(getXScreen() / 2 - 30, 10);
+
+	cout << "NHAP LOP CAN XUAT DANH SACH" << endl;
+	gotoXY(getXScreen() / 2 - 30, 12);
+	cout << "========================";
+	//DisplayEdit(keyInputIdStudent, 1, 30);
+
+	string id_class = "";
+	gotoXY(getXScreen() / 2 - 30, 11);
+	ShowCur(true);
 
 
-		SetColor(ColorCode_Blue);
-		gotoXY(getXScreen() / 2 - 30, 10);
+	//bool isSave = false;
+	InputSearchClass(id_class, isSave);
 
-		cout << "NHAP LOP CAN XUAT DANH SACH" << endl;
-		gotoXY(getXScreen() / 2 - 30, 12);
-		cout << "========================";
-		//DisplayEdit(keyInputIdStudent, 1, 30);
+	if (isSave == true) {
+		//clrscr();
 
-		string id_class = "";
-		gotoXY(getXScreen() / 2 - 30, 11);
-		ShowCur(true);
+		if (SearchClassById(list_student, id_class)) {
+			system("cls");
+			//Clrscr_Frame(1, 1, 200, 200);
+			isSearch = true;
+			ShowCur(false);
+			int i = 0;
+			Display(keyAverageScore, 5);
+			gotoXY(X_DISPLAY + 5, Y_DISPLAY - 1);
+			cout<<"MA LOP: "<<id_class;
+			for (NodeStudent* run = list_student.pHead; run != NULL; run = run->pNext, i++) {
+				if (run->data.idClass == id_class) {
+					DeleteOldData(sizeof(keyAverageScore) / sizeof(string), i);
+					gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 3 + i); cout << i;
+					gotoXY(xKeyDisplay[1] + 1, Y_DISPLAY + 3 + i); cout << run->data.idStudent;
+					//NodeStudent* a = FindStudent(list_student, run->data->idStudent);
+					gotoXY(xKeyDisplay[2] + 1, Y_DISPLAY + 3 + i); cout << run->data.firstName;
+					gotoXY(xKeyDisplay[3] + 1, Y_DISPLAY + 3 + i); cout << run->data.lastName;
+					gotoXY(xKeyDisplay[4] + 1, Y_DISPLAY + 3 + i); cout << getAverageScore(list, run->data.idStudent);
+
+				}
+			}
+			//break;
+		}
+		else {
+			gotoXY(getXScreen() / 2 - 30, 11);
+			cout << setw(50) << setfill(' ') << " ";
+			gotoXY(getXScreen() / 2 - 30, 30);
+			SetColor(ColorCode_Red);
+			cout << "MA LOP KHONG TON TAI HOAC BAN NHAP SAI, MOI BAN NHAP LAI, NHAN ENTER DE NHAP LAI";
+			if (key == KEY_ESC) {
+				return;
+			}
+		}
+		_getch();
+	}
+	else {
+		clrscr();
+		return;
+	}
+	if (key == KEY_ESC) {
+		clrscr();
+		return;
+	}
 
 
-		//bool isSave = false;
-		InputSearchClass(id_class, isSave);
-		if (isSave == true) {
-			//clrscr();
+}
 
-			if (SearchClassById(list_student, id_class)) {
-				system("cls");
-				ShowCur(false);
-				int i = 0;
-				Display(keyAverageScore, 5);
-				for (NodeStudent* run = list_student.pHead; run != NULL; run = run->pNext, i++) {
-					if (run->data.idClass == id_class) {
-						DeleteOldData(sizeof(keyAverageScore) / sizeof(string), i);
-						gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 3 + i); cout << i;
-						gotoXY(xKeyDisplay[1] + 1, Y_DISPLAY + 3 + i); cout << run->data.idStudent;
-						//NodeStudent* a = FindStudent(list_student, run->data->idStudent);
-						gotoXY(xKeyDisplay[2] + 1, Y_DISPLAY + 3 + i); cout << run->data.firstName;
-						gotoXY(xKeyDisplay[3] + 1, Y_DISPLAY + 3 + i); cout << run->data.lastName;
-						gotoXY(xKeyDisplay[4] + 1, Y_DISPLAY + 3 + i); cout << getAverageScore(list, run->data.idStudent);
+void OutputSum(LIST_CREDITCLASS list, ListStudent list_student) {
+	clrscr();
+	int key = 0;
+	bool isSave = false;
+	int isSearch = false;
+	//key = _getch();
+	SetColor(ColorCode_Blue);
+	gotoXY(getXScreen() / 2 - 30, 10);
 
+	cout << "NHAP LOP CAN XUAT DANH SACH" << endl;
+	gotoXY(getXScreen() / 2 - 30, 12);
+	cout << "========================";
+	//DisplayEdit(keyInputIdStudent, 1, 30);
+
+	string id_class = "";
+	gotoXY(getXScreen() / 2 - 30, 11);
+	ShowCur(true);
+
+
+	//bool isSave = false;
+	InputSearchClass(id_class, isSave);
+
+	if (isSave == true) {
+		//clrscr();
+
+		if (SearchClassById(list_student, id_class)) {
+			system("cls");
+			//Clrscr_Frame(1, 1, 200, 200);
+			isSearch = true;
+			ShowCur(false);
+			int i = 0;
+			gotoXY(X_DISPLAY + 5, Y_DISPLAY - 1);
+			cout << "MA LOP: " << id_class;
+			//Display(keyAverageScore, 5);
+			gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY); cout << "STT";
+			gotoXY(xKeyDisplay[1] + 1, Y_DISPLAY); cout << "ma SV";
+			//NodeStudent* a = FindStudent(list_student, run->data->idStudent);
+			gotoXY(xKeyDisplay[2] + 1, Y_DISPLAY); cout << "Ho";
+			gotoXY(xKeyDisplay[3] + 1, Y_DISPLAY); cout << "Ten";
+			int k = 0;
+			for (int j = 0; j < list.n; j++) {
+				gotoXY(xKeyDisplay[4] + k, Y_DISPLAY);
+				cout << list.listCreditClass[j]->idSubject << "( id:" << list.listCreditClass[j]->idClass << ") ";
+				k = k + 17;
+			}
+			
+			for (NodeStudent* run = list_student.pHead; run != NULL; run = run->pNext, i++) {
+				int g = 0;
+				if (run->data.idClass == id_class) {
+
+					DeleteOldData(sizeof(keyAverageScore) / sizeof(string), i);
+					gotoXY(xKeyDisplay[0] + 1, Y_DISPLAY + 3 + i); cout << i;
+					gotoXY(xKeyDisplay[1] + 1, Y_DISPLAY + 3 + i); cout << run->data.idStudent;
+					//NodeStudent* a = FindStudent(list_student, run->data->idStudent);
+					gotoXY(xKeyDisplay[2] + 1, Y_DISPLAY + 3 + i); cout << run->data.firstName;
+					gotoXY(xKeyDisplay[3] + 1, Y_DISPLAY + 3 + i); cout << run->data.lastName;
+					//gotoXY(xKeyDisplay[4] + 1, Y_DISPLAY + 3 + i); cout << getAverageScore(list, run->data.idStudent);
+
+					for (int j = 0; j < list.n; j++) {
+
+						gotoXY(xKeyDisplay[4] + g, Y_DISPLAY + 3 + i);
+						if (CheckRegisterIsExist(list.listCreditClass[j], run->data.idStudent)) {
+							cout << SearchNodeRegister(list.listCreditClass[j], run->data.idStudent)->_registerStudent.point;
+						}
+						else {
+							cout << "khong dk";
+						}
+						g = g + 17;
 					}
 				}
 			}
-			else {
-				gotoXY(getXScreen() / 2 - 30, 11);
-				cout << setw(50) << setfill(' ') << " ";
-				gotoXY(getXScreen() / 2 - 30, 30);
-				SetColor(ColorCode_Red);
-				cout << "MA LOP KHONG TON TAI HOAC BAN NHAP SAI, MOI BAN NHAP LAI, NHAN ENTER DE NHAP LAI";
-				if (key == KEY_ESC) {
-					break;
-				}
-			}
+			//break;
 		}
 		else {
-			clrscr();
-			break;
+			gotoXY(getXScreen() / 2 - 30, 11);
+			cout << setw(50) << setfill(' ') << " ";
+			gotoXY(getXScreen() / 2 - 30, 30);
+			SetColor(ColorCode_Red);
+			cout << "MA LOP KHONG TON TAI HOAC BAN NHAP SAI, MOI BAN NHAP LAI, NHAN ENTER DE NHAP LAI";
+			if (key == KEY_ESC) {
+				return;
+			}
 		}
-		if (key == KEY_ESC) {
-			clrscr();
-			break;
-		}
-
+		_getch();
+	}
+	else {
+		clrscr();
+		return;
+	}
+	if (key == KEY_ESC) {
+		clrscr();
+		return;
 	}
 
 }

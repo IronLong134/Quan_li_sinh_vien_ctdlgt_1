@@ -20,8 +20,6 @@ struct NodeSubject
 };
 typedef struct NodeSubject NODE_SUBJECT;
 typedef NODE_SUBJECT* TREE_SUBJECT;
-TREE_SUBJECT binaryTree = NULL;
-TREE_SUBJECT rp;
 
 
 

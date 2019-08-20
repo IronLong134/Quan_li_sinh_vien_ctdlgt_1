@@ -25,19 +25,19 @@ F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1526,7): warning C4101:  'KT': unrefe
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1630,7): warning C4101:  'KT': unreferenced local variable
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\lib.h(1732,7): warning C4101:  'KT': unreferenced local variable
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(27,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(89,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(156,33): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(204,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(249,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(318,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(465,24): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(244,6): warning C4101:  'key': unreferenced local variable
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(752,30): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(1091,22): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(1124,20): warning C4101:  'credit_class': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(87,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(153,33): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(200,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(245,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(314,29): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\validation.h(461,24): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(242,6): warning C4101:  'key': unreferenced local variable
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(781,30): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(1219,22): warning C4244:  '=': conversion from 'double' to 'float', possible loss of data
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(1252,20): warning C4101:  'credit_class': unreferenced local variable
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(29,13): warning C4326:  return type of 'main' should be 'int' instead of 'void'
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(29,13): warning C4326: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(161) : warning C4715: 'DeleteNodeSubject': not all control paths return a value
-F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(29,13): warning C4326: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(334) : warning C4715: 'ChooseSubject': not all control paths return a value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(29,13): warning C4326: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(159) : warning C4715: 'DeleteNodeSubject': not all control paths return a value
+F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(29,13): warning C4326: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\subject.h(332) : warning C4715: 'ChooseSubject': not all control paths return a value
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(29,13): warning C4326: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\student.h(206) : warning C4715: 'DeleteStudent': not all control paths return a value
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(29,13): warning C4326: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\student.h(235) : warning C4715: 'GetInfoStudentById': not all control paths return a value
 F:\QuanLiSinhVien_1\QuanLiSinhVien_1\main.cpp(29,13): warning C4326: F:\QuanLiSinhVien_1\QuanLiSinhVien_1\creditclass.h(63) : warning C4715: 'FindCreditClassWithBinariSearch': not all control paths return a value

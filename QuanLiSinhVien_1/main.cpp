@@ -3,7 +3,7 @@
 #include "student.h"
 #include"creditclass.h"
 
-string Menu[7] = { "HIEU CHINH MON HOC","HIEU CHINH SINH VIEN","HIEU CHINH LOP TIN CHI","DANG KI MON HOC CHO SINH VIEN","DANH SACH DANG KI","IN DANH SACH","THOAT" };
+string Menu[8] = { "HIEU CHINH MON HOC","HIEU CHINH SINH VIEN","HIEU CHINH LOP TIN CHI","DANG KI MON HOC CHO SINH VIEN","DANH SACH DANG KI","IN DANH SACH DIEM TB","IN DANH SACH TONG HOP","THOAT" };
 
 void menuMain() {
 
@@ -70,17 +70,18 @@ void main() {
 	init(logo);
 	while (true)
 	{
+		ShowCur(false);
 		drawLogo(3, logo);
 		//clrscr();
 		Ve_Khung((getXScreen() - 55) / 2, 14, 55, 25);
-		loadMenu(Menu, select, 7, (getXScreen() - 40) / 2, 20, ColorCode_White, ColorCode_Blue);
+		loadMenu(Menu, select, 8, (getXScreen() - 40) / 2, 20, ColorCode_White, ColorCode_Blue);
 
 		//hienThiMenu(thongTinMenuMonHoc, 0, 2, 4, 25, ColorCode_White, ColorCode_Cyan);
 		//hienThiThongTinMonHoc(mhtt, 0, 0, ColorCode_Cyan);
 		key = _getch();
-		changeSelectMenu(select, 7, key);
+		changeSelectMenu(select, 8, key);
 		if (key == KEY_ENTER) {
-			if (select == 6) {
+			if (select == 7) {
 				break;
 			}
 			else if (select == 0) {
@@ -93,7 +94,6 @@ void main() {
 
 				MenuSubjectManager(t);
 				WriteFileSubject(t);
-				clrscr();
 			}
 			else if (select == 1) {
 				clrscr();
@@ -102,7 +102,6 @@ void main() {
 
 				mainStudent(ds);
 				WriteFileStudent(ds);
-				clrscr();
 
 			}
 			else if (select == 2) {
@@ -113,7 +112,6 @@ void main() {
 				//MenuManageCreditClass(list_credit_class, t);
 				ManagerListCreditClassMain(list_credit_class, t);
 				WriteFileCreditClass(list_credit_class);
-				clrscr();
 			}
 			else if (select == 3) {
 				clrscr();
@@ -128,13 +126,17 @@ void main() {
 				SetBGColor(ColorCode_White);
 
 				managerAddScore(list_credit_class,t,ds);
-				clrscr();
 			}
 			else if (select == 5) {
 				clrscr();
 				OutputAverageScore(list_credit_class, ds);
-				clrscr();
 			}
+			else if (select == 6) {
+				clrscr();
+				OutputSum(list_credit_class, ds);
+			}
+			SetBGColor(ColorCode_White);
+			clrscr();
 		}
 	}
 	WriteFileCreditClass(list_credit_class);

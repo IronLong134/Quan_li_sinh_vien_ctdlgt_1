@@ -46,6 +46,7 @@ bool ListRegisterStudentIsEmty(LIST_REGISTERSTUDENT l)
 }
 //
 void InsertTailRegisterStudentToList(LIST_REGISTERSTUDENT& l, NODE_REGISTERSTUDENT* ins) {
+	l.n++;
 	if (l.pHead == NULL)
 	{
 		l.pHead = l.pTail = ins;
